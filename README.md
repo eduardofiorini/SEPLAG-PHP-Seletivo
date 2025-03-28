@@ -27,8 +27,8 @@ As prioridades do projeto estão listadas abaixo na ordem crescente:
 
 - ✅ Criação do Repositório - [24/03/2025 - Commit c85ebc5](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/c85ebc56a261e3be241ca21432f6d19f9fa1737a)
 - ✅ Implementar Framework - [27/03/2025 - Commit 56e28dd](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/56e28ddfdb82723cdf6d95bbc6293ab499f17180)
-- ✅ Implementar Migrations
-- ⬛ Implementar Models
+- ✅ Implementar Migrations - [28/03/2025 - Commit 391c755](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/391c7559033100ebb184d32f5dfe207d397d552a)
+- ✅ Implementar Models
 - ⬛ Implementar JWT
 - ⬛ Implementar Validações
 - ⬛ Implementar Limitador Request (AntiDDos)
