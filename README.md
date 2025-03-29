@@ -13,12 +13,10 @@ E-mail: edupva@gmail.com
 ## 📦 Instalação
 
 ```sh
-
-```
-
-## ⚙️ Configurações
-```sh
-
+$ git clone https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo.git
+$ cd SEPLAG-PHP-Seletivo
+chmod +x docker-entrypoint.sh
+docker-compose up -d
 ```
 
 ## 📌 Implementações (Tasks)
@@ -29,19 +27,19 @@ As prioridades do projeto estão listadas abaixo na ordem crescente:
 - ✅ Implementar Framework - [27/03/2025 - Commit 56e28dd](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/56e28ddfdb82723cdf6d95bbc6293ab499f17180)
 - ✅ Implementar Migrations - [28/03/2025 - Commit 391c755](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/391c7559033100ebb184d32f5dfe207d397d552a)
 - ✅ Implementar Models - [28/03/2025 - Commit 062c821](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/062c8216479abaf8a969ca7dc8e2f6931a2b2761)
-- ✅ Implementar JWT
-- ✅ Implementar Validações
-- ✅ Implementar Limitador Request (AntiDDos)
-- ✅ Implementar Limitador Acesso Externo (Cors)
+- ✅ Implementar JWT - [28/03/2025 - Commit 93d4673](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/93d467390f6db8019df8e1fe88b53aa85ac872f1)
+- ✅ Implementar Validações - [28/03/2025 - Commit 93d4673](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/93d467390f6db8019df8e1fe88b53aa85ac872f1)
+- ✅ Implementar Limitador Request (AntiDDos) - [28/03/2025 - Commit 93d4673](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/93d467390f6db8019df8e1fe88b53aa85ac872f1)
+- ✅ Implementar Limitador Acesso Externo (Cors) - [28/03/2025 - Commit 93d4673](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/93d467390f6db8019df8e1fe88b53aa85ac872f1)
+- ✅ Dockerizar Aplicação
 - ⬛ Implementar Controllers
+- ⬛ Implementar Rotas
 - ⬛ Implementar Teste Unitário
 - ⬛ Implementar Swagger
-- ⬛ Implementar Rotas
 - ⬛ Implementar CRUD
 - ⬛ Implementar Paginação
 - ⬛ Implementar Ordenação
 - ⬛ Implementar Upload MinIO
-- ⬛ Dockerizar Aplicação
 - ⬛ Deploy
 - ⬛ Finalização
 
