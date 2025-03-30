@@ -7,49 +7,42 @@ services:
     ports:
       - "9000:9000"
       - "9001:9001"
+    volumes:
+      - ./minio/data:/data
     environment:
       MINIO_ROOT_USER: admin
-      MINIO_ROOT_PASSWORD: ugB<$20^6If+
-    command: server --console-address ":9001" /data
-    volumes:
-      - minio_data:/data
-    restart: always
+      MINIO_ROOT_PASSWORD: seplag@123
+    command: server /data --console-address ":9001"
+    networks:
+      - app_network
 
   postgres:
-    image: postgres:15
+    image: postgres:13
     container_name: postgres
-    restart: always
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: ryEb9yr87S/D
-      POSTGRES_DB: seplag-db
+      POSTGRES_USER: seplag
+      POSTGRES_PASSWORD: seplag@123
+      POSTGRES_DB: seplag_db
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/data:/var/lib/postgresql/data
+    networks:
+      - app_network
 
-  api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: seplag-api
-    depends_on:
-      - postgres
+  app:
+    build: .
+    container_name: app
     ports:
       - "8080:80"
-    environment:
-      CI_ENVIRONMENT: development
-      DB_HOST: postgres
-      DB_NAME: seplag-db
-      DB_USER: user
-      DB_PASS: ryEb9yr87S/D
-      MINIO_ENDPOINT: http://minio:9000
-      MINIO_ACCESS_KEY: admin
-      MINIO_SECRET_KEY: ugB<$20^6If+
     volumes:
       - .:/var/www/html
-    entrypoint: ["/var/www/html/docker-entrypoint.sh"]
+    depends_on:
+      - postgrescl
+      - minio
+    networks:
+      - app_network
 
-volumes:
-  minio_data:
-  postgres_data:
+networks:
+  app_network:
+    driver: bridge

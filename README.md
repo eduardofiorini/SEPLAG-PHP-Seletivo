@@ -10,13 +10,20 @@ Inscrição: 7838
 E-mail: edupva@gmail.com
 ```
 
-## 📦 Instalação
+## 📦 Instalação (Deploy)
 
 ```sh
+# Use o comando abaixo para clonar o repositório.
 $ git clone https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo.git
 $ cd SEPLAG-PHP-Seletivo
-chmod +x docker-entrypoint.sh
-docker-compose up -d
+
+# Caso não tenha o Docker Compose, preciosa ser instalado.
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose --version
+
+# Para facilitar o deploy foi criado um setup de instalação e configuração do projeto.
+chmod +x setup.sh && ./setup.sh
 ```
 
 ## 📌 Implementações (Tasks)
@@ -31,7 +38,7 @@ As prioridades do projeto estão listadas abaixo na ordem crescente:
 - ✅ Implementar Validações - [28/03/2025 - Commit 93d4673](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/93d467390f6db8019df8e1fe88b53aa85ac872f1)
 - ✅ Implementar Limitador Request (AntiDDos) - [28/03/2025 - Commit 93d4673](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/93d467390f6db8019df8e1fe88b53aa85ac872f1)
 - ✅ Implementar Limitador Acesso Externo (Cors) - [28/03/2025 - Commit 93d4673](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/93d467390f6db8019df8e1fe88b53aa85ac872f1)
-- ✅ Dockerizar Aplicação
+- ✅ Dockerizar Aplicação - [28/03/2025 - Commit 4e19698](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/4e19698db4ee77c99b8f66938093fc07ba2640ea)
 - ⬛ Implementar Controllers
 - ⬛ Implementar Rotas
 - ⬛ Implementar Teste Unitário
