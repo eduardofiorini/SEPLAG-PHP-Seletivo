@@ -38,7 +38,7 @@ services:
     volumes:
       - .:/var/www/html
     depends_on:
-      - postgrescl
+      - postgres
       - minio
     networks:
       - app_network
