@@ -39,10 +39,11 @@ As prioridades do projeto estão listadas abaixo na ordem crescente:
 - ✅ Implementar Limitador Request (AntiDDos) - [28/03/2025 - Commit 93d4673](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/93d467390f6db8019df8e1fe88b53aa85ac872f1)
 - ✅ Implementar Limitador Acesso Externo (Cors) - [28/03/2025 - Commit 93d4673](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/93d467390f6db8019df8e1fe88b53aa85ac872f1)
 - ✅ Dockerizar Aplicação - [28/03/2025 - Commit 4e19698](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/4e19698db4ee77c99b8f66938093fc07ba2640ea)
+- ✅ Implementar Swagger
+- ✅ Implementar Autenticação
 - ⬛ Implementar Controllers
 - ⬛ Implementar Rotas
 - ⬛ Implementar Teste Unitário
-- ⬛ Implementar Swagger
 - ⬛ Implementar CRUD
 - ⬛ Implementar Paginação
 - ⬛ Implementar Ordenação
@@ -63,3 +64,4 @@ Na modelagem abaixo não possui uma tabela de autenticação ou usuário, foi cr
 * <https://github.com/firebase/php-jwt>
 * <https://codeigniter.com/user_guide/index.html>
 * <https://packagist.org/packages/firebase/php-jwt>
+* <https://swagger.io/docs/>
