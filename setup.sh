@@ -1,5 +1,46 @@
 #!/bin/bash
 
+echo "Criando o arquivo .env"
+ENV_FILE=".env"
+rm -f $ENV_FILE
+cat <<EOL >> $ENV_FILE
+#--------------------------------------------------------------------
+# ENVIRONMENT
+#--------------------------------------------------------------------
+
+CI_ENVIRONMENT = production
+
+#--------------------------------------------------------------------
+# DATABASE
+#--------------------------------------------------------------------
+
+database.default.hostname = postgres
+database.default.database = seplag_db
+database.default.username = seplag
+database.default.password = seplag@123
+database.default.DBDriver = Postgre
+database.default.DBPrefix =
+database.default.charset = utf8
+database.default.DBCollat = utf8_general_ci
+database.default.port = 5432
+
+#--------------------------------------------------------------------
+# JWT AUTHENTICATION
+#--------------------------------------------------------------------
+
+jwt.privateKey = SEPLAG-8cd98f00B204e9800998ECf8427e
+jwt.lifeTime = 300
+jwt.ipSeverAuth = ::1
+
+#--------------------------------------------------------------------
+# MIN.IO
+#--------------------------------------------------------------------
+
+minio.endpoint = http://minio:9000
+minio.access.key = admin
+minio.secret.key = seplag@123
+EOL
+
 echo "Iniciando o processo de setup dos containers..."
 docker-compose down
 docker-compose build --no-cache
@@ -7,6 +48,13 @@ docker-compose up -d
 
 echo "Aguardando os containers..."
 sleep 10
+
+echo "Atribuir 777 na writable..."
+docker exec -it app bash -c "cd /var/www/html && \
+chown -R www-data:www-data writable && \
+chmod -R 777 writable && \
+find writable -type d -exec chmod 777 {} + && \
+find writable -type f -exec chmod 666 {} +"
 
 echo "Instalando dependencias composer..."
 docker exec -it app composer install --no-interaction --prefer-dist --optimize-autoloader
