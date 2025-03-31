@@ -73,7 +73,7 @@ class Filters extends BaseFilters
      */
     public array $globals = [
         'before' => [
-            'jwt' => ['except' => ['auth/', 'auth/registro','api/v1/docs/generate','api/v1/docs','']]
+            'jwt' => ['except' => ['api/v1/auth/', 'api/v1/auth/registro','api/v1/docs/generate','api/v1/docs','']]
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',

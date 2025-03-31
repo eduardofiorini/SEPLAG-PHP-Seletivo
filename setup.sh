@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Obtém o IP do servidor
+SERVER_IP=$(hostname -I | awk '{print $1}')
+echo "IP do servidor detectado: $SERVER_IP"
+
 echo "Criando o arquivo .env"
 ENV_FILE=".env"
 rm -f $ENV_FILE
@@ -9,6 +13,12 @@ cat <<EOL >> $ENV_FILE
 #--------------------------------------------------------------------
 
 CI_ENVIRONMENT = production
+
+#--------------------------------------------------------------------
+# APP
+#--------------------------------------------------------------------
+
+app.baseURL = 'http://$SERVER_IP:8080'
 
 #--------------------------------------------------------------------
 # DATABASE
@@ -49,12 +59,13 @@ docker-compose up -d
 echo "Aguardando os containers..."
 sleep 10
 
-echo "Atribuir 777 na writable..."
+echo "Atribuir 777 na writable e no swagger.json..."
 docker exec -it app bash -c "cd /var/www/html && \
 chown -R www-data:www-data writable && \
 chmod -R 777 writable && \
 find writable -type d -exec chmod 777 {} + && \
-find writable -type f -exec chmod 666 {} +"
+find writable -type f -exec chmod 666 {} + && \
+chmod 777 public/swagger.json"
 
 echo "Instalando dependencias composer..."
 docker exec -it app composer install --no-interaction --prefer-dist --optimize-autoloader

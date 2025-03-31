@@ -15,6 +15,19 @@ use CodeIgniter\RESTful\ResourceController;
  *     description="API Rest criada para o processo seletivo da SEPLAG 2025."
  * )
  *
+ * @OA\Server(
+ *     url="/api/v1",
+ *     description="Servidor de API"
+ * )
+ *
+ * @OA\SecurityScheme(
+ *     securityScheme="bearerAuth",
+ *     type="http",
+ *     scheme="bearer",
+ *     bearerFormat="JWT",
+ *     description="Insira o token JWT no formato: Bearer {token}"
+ * )
+ *
  *@OA\Tag(
  *     name="Autenticação",
  *     description="API Endpoints para autenticação de usuários"
