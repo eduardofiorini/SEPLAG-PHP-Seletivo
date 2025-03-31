@@ -41,11 +41,11 @@ As prioridades do projeto estão listadas abaixo na ordem crescente:
 - ✅ Dockerizar Aplicação - [28/03/2025 - Commit 4e19698](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/4e19698db4ee77c99b8f66938093fc07ba2640ea)
 - ✅ Implementar Swagger - [30/03/2025 - Commit d061c4b](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/d061c4b6163c87a95cf24ae835e1845fbb350ba0)
 - ✅ Implementar Autenticação - [30/03/2025 - Commit d061c4b](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/d061c4b6163c87a95cf24ae835e1845fbb350ba0)
-- ✅ Implementar Controllers
-- ✅ Implementar Rotas
-- ✅ Implementar CRUD
-- ✅ Implementar Paginação
-- ✅ Implementar Upload MinIO
+- ✅ Implementar Controllers - [31/03/2025 - Commit 13ce506](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/13ce506a7deca304eb13205454eb8f23e74ca1e5)
+- ✅ Implementar Rotas - [31/03/2025 - Commit 13ce506](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/13ce506a7deca304eb13205454eb8f23e74ca1e5)
+- ✅ Implementar CRUD - [31/03/2025 - Commit 13ce506](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/13ce506a7deca304eb13205454eb8f23e74ca1e5)
+- ✅ Implementar Paginação - [31/03/2025 - Commit 13ce506](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/13ce506a7deca304eb13205454eb8f23e74ca1e5)
+- ✅ Implementar Upload MinIO - [31/03/2025 - Commit 13ce506](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/13ce506a7deca304eb13205454eb8f23e74ca1e5)
 - ⬛ Implementar Teste Unitário
 - ⬛ Deploy
 - ⬛ Finalização
