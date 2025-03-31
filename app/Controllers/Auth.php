@@ -10,9 +10,24 @@ use CodeIgniter\RESTful\ResourceController;
 
 /**
  * @OA\Info(
- *     title="SEPLAG API Seletivo",
+ *     title="SEPLAG API Rest",
  *     version="1.0.0",
- *     description="API de autenticação para o sistema SEPLAG Seletivo"
+ *     description="API Rest criada para o processo seletivo da SEPLAG 2025."
+ * )
+ *
+ *@OA\Tag(
+ *     name="Autenticação",
+ *     description="API Endpoints para autenticação de usuários"
+ * )
+ *
+ *@OA\Schema(
+ *     schema="Autenticação",
+ *     title="Auth Model",
+ *     description="Auth model data",
+ *     @OA\Property(property="auth_id", type="integer", example=1),
+ *     @OA\Property(property="auth_nome", type="string", example="Maria Aparecida da Silva"),
+ *     @OA\Property(property="auth_email", type="string", example="teste@teste.com.br"),
+ *     @OA\Property(property="auth_senha", type="string", example="senha@123")
  * )
  */
 class Auth extends ResourceController
@@ -27,21 +42,21 @@ class Auth extends ResourceController
 
     /**
      * @OA\Post(
-     *     path="/auth",
-     *     tags={"Authentication"},
-     *     summary="User login",
-     *     description="Login with email and password",
+     *     path="/api/v1/auth",
+     *     tags={"Autenticação"},
+     *     summary="Realiza a autenticação na api",
+     *     description="Favor inserir os dados de email e senha (password)",
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
      *             required={"email", "senha"},
-     *             @OA\Property(property="email", type="string", format="email", example="user@example.com"),
-     *             @OA\Property(property="senha", type="string", format="password", example="password123")
+     *             @OA\Property(property="email", type="string", format="email", example="teste@teste.com.br"),
+     *             @OA\Property(property="senha", type="string", format="password", example="senha@123")
      *         )
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Login successful",
+     *         description="Login com sucesso",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(property="token", type="string"),
@@ -57,7 +72,7 @@ class Auth extends ResourceController
      *     ),
      *     @OA\Response(
      *         response=400,
-     *         description="Validation error",
+     *         description="Erro de validação",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(property="error", type="string")
@@ -65,7 +80,7 @@ class Auth extends ResourceController
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Email not found",
+     *         description="E-mail não encontrado",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(property="error", type="string", example="Email não encontrado")
@@ -125,22 +140,22 @@ class Auth extends ResourceController
 
     /**
      * @OA\Post(
-     *     path="/auth/registro",
-     *     tags={"Authentication"},
-     *     summary="Register new user",
-     *     description="Create a new user account",
+     *     path="/api/v1/auth/registro",
+     *     tags={"Autenticação"},
+     *     summary="Cadastrar de novos usuários",
+     *     description="Criar novo usuário para acesso",
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
      *             required={"nome", "email", "senha"},
-     *             @OA\Property(property="nome", type="string", example="John Doe"),
-     *             @OA\Property(property="email", type="string", format="email", example="user@example.com"),
-     *             @OA\Property(property="senha", type="string", format="password", example="password123")
+     *             @OA\Property(property="nome", type="string", example="Maria Aparecida da Silva"),
+     *             @OA\Property(property="email", type="string", format="email", example="teste@teste.com.br"),
+     *             @OA\Property(property="senha", type="string", format="password", example="senha@123")
      *         )
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="User created successfully",
+     *         description="Usuário criado com sucesso",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(property="auth_id", type="integer"),
@@ -150,7 +165,7 @@ class Auth extends ResourceController
      *     ),
      *     @OA\Response(
      *         response=400,
-     *         description="Validation error",
+     *         description="Erro de validação",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(property="error", type="object")
@@ -158,7 +173,7 @@ class Auth extends ResourceController
      *     )
      * )
      */
-    public function registro()
+    public function register()
     {
         $rules = [
             'nome' => 'required',
@@ -183,25 +198,24 @@ class Auth extends ResourceController
     }
 
     /**
-     * @OA\Get(
-     *     path="/auth/perfil",
-     *     tags={"User"},
-     *     summary="Get user profile",
-     *     description="Retrieve the authenticated user's profile",
+     * @OA\Post(
+     *     path="/api/v1/auth/refresh",
+     *     tags={"Autenticação"},
+     *     summary="Refresh token autenticação",
+     *     description="Gerar um novo token usando o token existente válido",
      *     security={{"bearerAuth":{}}},
      *     @OA\Response(
      *         response=200,
-     *         description="User profile",
+     *         description="Token atualizado com sucesso",
      *         @OA\JsonContent(
      *             type="object",
-     *             @OA\Property(property="id", type="integer"),
-     *             @OA\Property(property="email", type="string"),
-     *             @OA\Property(property="name", type="string")
+     *             @OA\Property(property="token", type="string"),
+     *             @OA\Property(property="exp", type="integer")
      *         )
      *     ),
      *     @OA\Response(
      *         response=401,
-     *         description="Unauthorized - Invalid or expired token",
+     *         description="Não autorizado - Token inválido ou expirado",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(property="error", type="string", example="Token inválido ou expirado")
@@ -209,7 +223,7 @@ class Auth extends ResourceController
      *     )
      * )
      */
-    public function perfil()
+    public function refresh()
     {
         $key = getenv('jwt.privateKey');
         $authHeader = $this->request->getHeaderLine('Authorization');
@@ -219,29 +233,47 @@ class Auth extends ResourceController
             $token = $matches[1];
         }
 
+        if (!$token) {
+            return $this->failUnauthorized('Token não fornecido');
+        }
+
         try {
             $decoded = JWT::decode($token, new Key($key, 'HS256'));
-            $response = [
-                'id' => $decoded->sub,
+
+            $iat = time();
+            $exp = $iat + getenv('jwt.lifeTime');
+
+            $payload = [
+                'iss' => 'API SEPLAG SELETIVO',
+                'sub' => $decoded->sub,
+                'iat' => $iat,
+                'exp' => $exp,
                 'email' => $decoded->email,
-                'name' => $decoded->name
+                'nome' => $decoded->nome
             ];
-            return $this->respond($response);
+
+            $newToken = JWT::encode($payload, $key, 'HS256');
+
+            return $this->respond([
+                'token' => $newToken,
+                'exp' => $exp
+            ]);
         } catch (\Exception $e) {
             return $this->failUnauthorized('Token inválido ou expirado');
         }
     }
 
+
     /**
      * @OA\Post(
-     *     path="/auth/logout",
-     *     tags={"Authentication"},
-     *     summary="User logout",
-     *     description="Logout the authenticated user",
+     *     path="/api/v1/auth/logout",
+     *     tags={"Autenticação"},
+     *     summary="Desconectar Usuário",
+     *     description="Sair do usuário autenticado",
      *     security={{"bearerAuth":{}}},
      *     @OA\Response(
      *         response=200,
-     *         description="Logout successful",
+     *         description="Desconectado com sucesso",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(property="message", type="string", example="Logout realizado com sucesso")

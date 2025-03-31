@@ -39,15 +39,14 @@ As prioridades do projeto estão listadas abaixo na ordem crescente:
 - ✅ Implementar Limitador Request (AntiDDos) - [28/03/2025 - Commit 93d4673](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/93d467390f6db8019df8e1fe88b53aa85ac872f1)
 - ✅ Implementar Limitador Acesso Externo (Cors) - [28/03/2025 - Commit 93d4673](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/93d467390f6db8019df8e1fe88b53aa85ac872f1)
 - ✅ Dockerizar Aplicação - [28/03/2025 - Commit 4e19698](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/4e19698db4ee77c99b8f66938093fc07ba2640ea)
-- ✅ Implementar Swagger
-- ✅ Implementar Autenticação
-- ⬛ Implementar Controllers
-- ⬛ Implementar Rotas
+- ✅ Implementar Swagger - [30/03/2025 - Commit d061c4b](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/d061c4b6163c87a95cf24ae835e1845fbb350ba0)
+- ✅ Implementar Autenticação - [30/03/2025 - Commit d061c4b](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/d061c4b6163c87a95cf24ae835e1845fbb350ba0)
+- ✅ Implementar Controllers
+- ✅ Implementar Rotas
+- ✅ Implementar CRUD
+- ✅ Implementar Paginação
+- ✅ Implementar Upload MinIO
 - ⬛ Implementar Teste Unitário
-- ⬛ Implementar CRUD
-- ⬛ Implementar Paginação
-- ⬛ Implementar Ordenação
-- ⬛ Implementar Upload MinIO
 - ⬛ Deploy
 - ⬛ Finalização
 
@@ -65,3 +64,26 @@ Na modelagem abaixo não possui uma tabela de autenticação ou usuário, foi cr
 * <https://codeigniter.com/user_guide/index.html>
 * <https://packagist.org/packages/firebase/php-jwt>
 * <https://swagger.io/docs/>
+
+## 📚 Documentação / Credencial
+```sh
+# Api Rest (Swagger)
+http://localhost:8080/api/v1/docs
+http://localhost:8080/api/v1/docs/generate
+
+Porta: 8080
+Usuario: admin@admin.com.br
+Senha: Ezm&F7#G5&c2
+
+# Min.IO
+Porta: 9000-9001
+Usuario: admin
+Senha: seplag@123
+
+# PostGreSQL
+Porta: 5432
+Usuario: seplag
+Senha: seplag@123
+Banco: seplag_db
+```
+![Screenshot](swagger.png)

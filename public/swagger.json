@@ -1,19 +1,19 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "SEPLAG API Seletivo",
-        "description": "API de autenticação para o sistema SEPLAG Seletivo",
+        "title": "SEPLAG API Rest",
+        "description": "API Rest criada para o processo seletivo da SEPLAG 2025.",
         "version": "1.0.0"
     },
     "paths": {
-        "/auth": {
+        "/api/v1/auth": {
             "post": {
                 "tags": [
-                    "Authentication"
+                    "Autenticação"
                 ],
-                "summary": "User login",
-                "description": "Login with email and password",
-                "operationId": "099d4984a1d3987f3e26162a5852f172",
+                "summary": "Realiza a autenticação na api",
+                "description": "Favor inserir os dados de email e senha (password)",
+                "operationId": "ff999332b4fde4d1418d55fff84f397c",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -27,12 +27,12 @@
                                     "email": {
                                         "type": "string",
                                         "format": "email",
-                                        "example": "user@example.com"
+                                        "example": "teste@teste.com.br"
                                     },
                                     "senha": {
                                         "type": "string",
                                         "format": "password",
-                                        "example": "password123"
+                                        "example": "senha@123"
                                     }
                                 },
                                 "type": "object"
@@ -42,7 +42,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Login successful",
+                        "description": "Login com sucesso",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -74,7 +74,7 @@
                         }
                     },
                     "400": {
-                        "description": "Validation error",
+                        "description": "Erro de validação",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -89,7 +89,7 @@
                         }
                     },
                     "404": {
-                        "description": "Email not found",
+                        "description": "E-mail não encontrado",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -107,14 +107,14 @@
                 }
             }
         },
-        "/auth/registro": {
+        "/api/v1/auth/registro": {
             "post": {
                 "tags": [
-                    "Authentication"
+                    "Autenticação"
                 ],
-                "summary": "Register new user",
-                "description": "Create a new user account",
-                "operationId": "9ba9e737e088a5cd02e824264f7b7fc5",
+                "summary": "Cadastrar de novos usuários",
+                "description": "Criar novo usuário para acesso",
+                "operationId": "38e4611ea044dd6eac72db007fcccdcb",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -128,17 +128,17 @@
                                 "properties": {
                                     "nome": {
                                         "type": "string",
-                                        "example": "John Doe"
+                                        "example": "Maria Aparecida da Silva"
                                     },
                                     "email": {
                                         "type": "string",
                                         "format": "email",
-                                        "example": "user@example.com"
+                                        "example": "teste@teste.com.br"
                                     },
                                     "senha": {
                                         "type": "string",
                                         "format": "password",
-                                        "example": "password123"
+                                        "example": "senha@123"
                                     }
                                 },
                                 "type": "object"
@@ -148,7 +148,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "User created successfully",
+                        "description": "Usuário criado com sucesso",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -169,7 +169,7 @@
                         }
                     },
                     "400": {
-                        "description": "Validation error",
+                        "description": "Erro de validação",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -186,29 +186,26 @@
                 }
             }
         },
-        "/auth/perfil": {
-            "get": {
+        "/api/v1/auth/refresh": {
+            "post": {
                 "tags": [
-                    "User"
+                    "Autenticação"
                 ],
-                "summary": "Get user profile",
-                "description": "Retrieve the authenticated user's profile",
-                "operationId": "172ba610311481f01d21a77fa078a932",
+                "summary": "Refresh token autenticação",
+                "description": "Gerar um novo token usando o token existente válido",
+                "operationId": "b1568a1acfb18650550948c848e4c217",
                 "responses": {
                     "200": {
-                        "description": "User profile",
+                        "description": "Token atualizado com sucesso",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "id": {
+                                        "token": {
+                                            "type": "string"
+                                        },
+                                        "exp": {
                                             "type": "integer"
-                                        },
-                                        "email": {
-                                            "type": "string"
-                                        },
-                                        "name": {
-                                            "type": "string"
                                         }
                                     },
                                     "type": "object"
@@ -217,7 +214,7 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized - Invalid or expired token",
+                        "description": "Não autorizado - Token inválido ou expirado",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -240,17 +237,17 @@
                 ]
             }
         },
-        "/auth/logout": {
+        "/api/v1/auth/logout": {
             "post": {
                 "tags": [
-                    "Authentication"
+                    "Autenticação"
                 ],
-                "summary": "User logout",
-                "description": "Logout the authenticated user",
-                "operationId": "ebda7de17bf1519688c2efe2ef40828f",
+                "summary": "Desconectar Usuário",
+                "description": "Sair do usuário autenticado",
+                "operationId": "97fafed12839d420c75cf57408010951",
                 "responses": {
                     "200": {
-                        "description": "Logout successful",
+                        "description": "Desconectado com sucesso",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -272,16 +269,2522 @@
                     }
                 ]
             }
+        },
+        "/api/v1/lotacoes": {
+            "get": {
+                "tags": [
+                    "Lotações"
+                ],
+                "summary": "Listar todas as lotações",
+                "description": "Retorna uma lista paginada das lotações cadastradas",
+                "operationId": "b286c099696cf17bdfe6e238c407cefd",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número da página (padrão: 1)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Quantidade de registros por página (padrão: 10, máximo: 100)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10,
+                            "maximum": 100,
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de lotações",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Lotacao"
+                                            }
+                                        },
+                                        "pagination": {
+                                            "properties": {
+                                                "currentPage": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "totalPages": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "perPage": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 100
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Token inválido ou expirado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Lotações"
+                ],
+                "summary": "Cadastrar nova lotação",
+                "description": "Cria um novo registro de lotação",
+                "operationId": "272647d30130932cd4cf1a504f30662b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "pes_id",
+                                    "unid_id",
+                                    "lot_data_lotacao"
+                                ],
+                                "properties": {
+                                    "pes_id": {
+                                        "type": "integer",
+                                        "example": 23
+                                    },
+                                    "unid_id": {
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "lot_data_lotacao": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-01-15"
+                                    },
+                                    "lot_data_remocao": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-03-01"
+                                    },
+                                    "lot_portaria": {
+                                        "type": "string",
+                                        "example": "Portaria Nº 123/2025"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Lotação cadastrada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Lotacao"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro de validação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Token inválido ou expirado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/lotacoes/{id}": {
+            "get": {
+                "tags": [
+                    "Lotações"
+                ],
+                "summary": "Buscar lotação por ID",
+                "description": "Retorna os dados de uma lotação específica",
+                "operationId": "7555102638ff113465926e64a82b6ce3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da lotação",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dados da lotação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Lotacao"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Lotação não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Lotação não encontrada"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Token inválido ou expirado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Lotações"
+                ],
+                "summary": "Atualizar lotação",
+                "description": "Atualiza os dados de uma lotação específica",
+                "operationId": "0a402f9d18a1360d36ada7bfd410bc64",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da lotação",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "pes_id": {
+                                        "type": "integer",
+                                        "example": 23
+                                    },
+                                    "unid_id": {
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "lot_data_lotacao": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-01-15"
+                                    },
+                                    "lot_data_remocao": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-03-01"
+                                    },
+                                    "lot_portaria": {
+                                        "type": "string",
+                                        "example": "Portaria Nº 123/2025"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Lotação atualizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Lotacao"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro de validação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Lotação não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Lotação não encontrada"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Token inválido ou expirado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Lotações"
+                ],
+                "summary": "Excluir lotação",
+                "description": "Remove o cadastro de uma lotação específica",
+                "operationId": "6db6719d95e48e407b31101588cf7c82",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da lotação",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lotação excluída com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Lotação excluída com sucesso"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Lotação não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Lotação não encontrada"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Token inválido ou expirado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/servidores-efetivos": {
+            "get": {
+                "tags": [
+                    "ServidoresEfetivos"
+                ],
+                "summary": "Listar todos os servidores efetivos",
+                "description": "Retorna uma lista paginada dos servidores efetivos no formato JSON simplificado",
+                "operationId": "8fd459537dadbe9966e299d1644ea0b0",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número da página (padrão: 1)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Quantidade de registros por página (padrão: 10, máximo: 100)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10,
+                            "maximum": 100,
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de servidores efetivos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "pagination": {
+                                            "properties": {
+                                                "currentPage": {
+                                                    "type": "integer"
+                                                },
+                                                "totalPages": {
+                                                    "type": "integer"
+                                                },
+                                                "perPage": {
+                                                    "type": "integer"
+                                                },
+                                                "total": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "ServidoresEfetivos"
+                ],
+                "summary": "Cadastrar novo servidor efetivo",
+                "description": "Cria um novo registro de servidor efetivo",
+                "operationId": "36a94a683fe773def0c99e5d95852b96",
+                "requestBody": {
+                    "description": "Dados do servidor efetivo",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "pes_nome",
+                                    "pes_data_nascimento",
+                                    "pes_sexo",
+                                    "pes_mae",
+                                    "servidor_efetivo",
+                                    "endereco"
+                                ],
+                                "properties": {
+                                    "pes_nome": {
+                                        "type": "string"
+                                    },
+                                    "pes_data_nascimento": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "pes_sexo": {
+                                        "type": "string",
+                                        "enum": [
+                                            "M",
+                                            "F"
+                                        ]
+                                    },
+                                    "pes_mae": {
+                                        "type": "string"
+                                    },
+                                    "pes_pai": {
+                                        "type": "string"
+                                    },
+                                    "servidor_efetivo": {
+                                        "properties": {
+                                            "se_matricula": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "endereco": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "end_tipo_logradouro": {
+                                                    "type": "string"
+                                                },
+                                                "end_logradouro": {
+                                                    "type": "string"
+                                                },
+                                                "end_numero": {
+                                                    "type": "string"
+                                                },
+                                                "end_bairro": {
+                                                    "type": "string"
+                                                },
+                                                "cidade": {
+                                                    "properties": {
+                                                        "cid_id": {
+                                                            "type": "integer"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Servidor efetivo criado com sucesso"
+                    },
+                    "400": {
+                        "description": "Erro de validação nos dados fornecidos"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    },
+                    "404": {
+                        "description": "Cidade não encontrada"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/servidores-efetivos/{id}": {
+            "get": {
+                "tags": [
+                    "ServidoresEfetivos"
+                ],
+                "summary": "Buscar servidor efetivo por ID",
+                "description": "Retorna os dados de um servidor efetivo específico no formato JSON simplificado",
+                "operationId": "128d1bb11276af1cfd5e7a08cc31710a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do servidor efetivo (mesmo que pes_id)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalhes do servidor efetivo",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Servidor efetivo não encontrado"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "ServidoresEfetivos"
+                ],
+                "summary": "Atualizar servidor efetivo",
+                "description": "Atualiza os dados de um servidor efetivo específico",
+                "operationId": "8bd92886ebc9590c34089e9474533226",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do servidor efetivo (mesmo que pes_id)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Dados para atualização do servidor efetivo",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "pes_nome": {
+                                        "type": "string"
+                                    },
+                                    "pes_data_nascimento": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "pes_sexo": {
+                                        "type": "string",
+                                        "enum": [
+                                            "M",
+                                            "F"
+                                        ]
+                                    },
+                                    "pes_mae": {
+                                        "type": "string"
+                                    },
+                                    "pes_pai": {
+                                        "type": "string"
+                                    },
+                                    "servidor_efetivo": {
+                                        "properties": {
+                                            "se_matricula": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "endereco": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "end_tipo_logradouro": {
+                                                    "type": "string"
+                                                },
+                                                "end_logradouro": {
+                                                    "type": "string"
+                                                },
+                                                "end_numero": {
+                                                    "type": "string"
+                                                },
+                                                "end_bairro": {
+                                                    "type": "string"
+                                                },
+                                                "cidade": {
+                                                    "properties": {
+                                                        "cid_id": {
+                                                            "type": "integer"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Servidor efetivo atualizado com sucesso"
+                    },
+                    "400": {
+                        "description": "Erro de validação nos dados fornecidos"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    },
+                    "404": {
+                        "description": "Servidor efetivo não encontrado"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "ServidoresEfetivos"
+                ],
+                "summary": "Excluir servidor efetivo",
+                "description": "Remove o cadastro de um servidor efetivo específico",
+                "operationId": "0eda61f1d767559f3cc0f6906d3cb956",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do servidor efetivo (mesmo que pes_id)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "deleteRelated",
+                        "in": "query",
+                        "description": "Flag para excluir registros relacionados (pessoa, endereço, etc.)",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Servidor efetivo excluído com sucesso"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    },
+                    "404": {
+                        "description": "Servidor efetivo não encontrado"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/servidores-efetivos/{id}/foto": {
+            "post": {
+                "tags": [
+                    "ServidoresEfetivos"
+                ],
+                "summary": "Upload de foto do servidor efetivo",
+                "description": "Realiza o upload da foto de um servidor efetivo específico",
+                "operationId": "f6590c04437103deeb209e6ca513a8b3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do servidor efetivo (mesmo que pes_id)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "foto": {
+                                        "description": "Arquivo de imagem para upload",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Foto atualizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "fp_id": {
+                                                    "type": "integer"
+                                                },
+                                                "fp_data": {
+                                                    "type": "string",
+                                                    "format": "date"
+                                                },
+                                                "fp_bucket": {
+                                                    "type": "string"
+                                                },
+                                                "fp_hash": {
+                                                    "type": "string"
+                                                },
+                                                "pes_id": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Foto cadastrada com sucesso"
+                    },
+                    "400": {
+                        "description": "Erro de validação nos dados fornecidos"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    },
+                    "404": {
+                        "description": "Servidor efetivo não encontrado"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "ServidoresEfetivos"
+                ],
+                "summary": "Excluir foto do servidor efetivo",
+                "description": "Remove a foto de um servidor efetivo específico",
+                "operationId": "4505b4453a376ff7cf9b19346538ba7d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do servidor efetivo (mesmo que pes_id)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Foto excluída com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Foto excluída com sucesso"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Servidor efetivo não encontrado ou foto não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Servidor efetivo não encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Token inválido ou expirado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/servidores-efetivos/unidade/{unid_id}": {
+            "get": {
+                "tags": [
+                    "ServidoresEfetivos"
+                ],
+                "summary": "Listar servidores efetivos de uma unidade",
+                "description": "Retorna uma lista dos servidores efetivos lotados em uma determinada unidade",
+                "operationId": "202aff1a00e1713eb9f0b6185231024d",
+                "parameters": [
+                    {
+                        "name": "unid_id",
+                        "in": "path",
+                        "description": "ID da unidade",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de servidores efetivos da unidade",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "nome": {
+                                                        "type": "string"
+                                                    },
+                                                    "idade": {
+                                                        "type": "integer"
+                                                    },
+                                                    "unidade": {
+                                                        "type": "string"
+                                                    },
+                                                    "foto": {
+                                                        "type": "string",
+                                                        "nullable": true
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Unidade não encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/servidores-efetivos/buscar-por-nome": {
+            "get": {
+                "tags": [
+                    "ServidoresEfetivos"
+                ],
+                "summary": "Buscar endereço funcional por nome do servidor",
+                "description": "Retorna o endereço funcional (da unidade onde é lotado) de servidores efetivos a partir de uma parte do nome",
+                "operationId": "8046aff631d4f0e9a0058ee038579917",
+                "parameters": [
+                    {
+                        "name": "nome",
+                        "in": "query",
+                        "description": "Parte do nome do servidor a ser pesquisado",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "minLength": 3
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de servidores e seus endereços funcionais",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "nome": {
+                                                        "type": "string"
+                                                    },
+                                                    "matricula": {
+                                                        "type": "string"
+                                                    },
+                                                    "unidade": {
+                                                        "type": "string"
+                                                    },
+                                                    "endereco_funcional": {
+                                                        "properties": {
+                                                            "logradouro": {
+                                                                "type": "string"
+                                                            },
+                                                            "numero": {
+                                                                "type": "string"
+                                                            },
+                                                            "bairro": {
+                                                                "type": "string"
+                                                            },
+                                                            "cidade": {
+                                                                "type": "string"
+                                                            },
+                                                            "uf": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro nos parâmetros da requisição"
+                    },
+                    "404": {
+                        "description": "Nenhum servidor encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/servidores-temporarios": {
+            "get": {
+                "tags": [
+                    "ServidoresTemporarios"
+                ],
+                "summary": "Listar todos os servidores temporários",
+                "description": "Retorna uma lista paginada dos servidores temporários no formato JSON simplificado",
+                "operationId": "67559d745d519e5f700a1aa8f6d608bb",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número da página (padrão: 1)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Quantidade de registros por página (padrão: 10, máximo: 100)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10,
+                            "maximum": 100,
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de servidores temporários",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "pagination": {
+                                            "properties": {
+                                                "currentPage": {
+                                                    "type": "integer"
+                                                },
+                                                "totalPages": {
+                                                    "type": "integer"
+                                                },
+                                                "perPage": {
+                                                    "type": "integer"
+                                                },
+                                                "total": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "ServidoresTemporarios"
+                ],
+                "summary": "Cadastrar novo servidor temporário",
+                "description": "Cria um novo registro de servidor temporário",
+                "operationId": "421e85a17090397152c19cc5c2f912e9",
+                "requestBody": {
+                    "description": "Dados do servidor temporário",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "pes_nome",
+                                    "pes_data_nascimento",
+                                    "pes_sexo",
+                                    "pes_mae",
+                                    "servidor_temporario",
+                                    "endereco"
+                                ],
+                                "properties": {
+                                    "pes_nome": {
+                                        "type": "string"
+                                    },
+                                    "pes_data_nascimento": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "pes_sexo": {
+                                        "type": "string",
+                                        "enum": [
+                                            "M",
+                                            "F"
+                                        ]
+                                    },
+                                    "pes_mae": {
+                                        "type": "string"
+                                    },
+                                    "pes_pai": {
+                                        "type": "string"
+                                    },
+                                    "servidor_temporario": {
+                                        "properties": {
+                                            "st_data_admissao": {
+                                                "type": "string",
+                                                "format": "date"
+                                            },
+                                            "st_data_demissao": {
+                                                "type": "string",
+                                                "format": "date"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "endereco": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "end_tipo_logradouro": {
+                                                    "type": "string"
+                                                },
+                                                "end_logradouro": {
+                                                    "type": "string"
+                                                },
+                                                "end_numero": {
+                                                    "type": "string"
+                                                },
+                                                "end_bairro": {
+                                                    "type": "string"
+                                                },
+                                                "cidade": {
+                                                    "properties": {
+                                                        "cid_id": {
+                                                            "type": "integer"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Servidor temporário criado com sucesso"
+                    },
+                    "400": {
+                        "description": "Erro de validação nos dados fornecidos"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    },
+                    "404": {
+                        "description": "Cidade não encontrada"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/servidores-temporarios/{id}": {
+            "get": {
+                "tags": [
+                    "ServidoresTemporarios"
+                ],
+                "summary": "Buscar servidor temporário por ID",
+                "description": "Retorna os dados de um servidor temporário específico no formato JSON simplificado",
+                "operationId": "de857478001e289cc56897fae22274de",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do servidor temporário (mesmo que pes_id)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalhes do servidor temporário",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Servidor temporário não encontrado"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "ServidoresTemporarios"
+                ],
+                "summary": "Atualizar servidor temporário",
+                "description": "Atualiza os dados de um servidor temporário específico",
+                "operationId": "a5e00f03a83dd72013262d14a05fb43f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do servidor temporário (mesmo que pes_id)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Dados para atualização do servidor temporário",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "pes_nome": {
+                                        "type": "string"
+                                    },
+                                    "pes_data_nascimento": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "pes_sexo": {
+                                        "type": "string",
+                                        "enum": [
+                                            "M",
+                                            "F"
+                                        ]
+                                    },
+                                    "pes_mae": {
+                                        "type": "string"
+                                    },
+                                    "pes_pai": {
+                                        "type": "string"
+                                    },
+                                    "servidor_temporario": {
+                                        "properties": {
+                                            "st_data_admissao": {
+                                                "type": "string",
+                                                "format": "date"
+                                            },
+                                            "st_data_demissao": {
+                                                "type": "string",
+                                                "format": "date"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "endereco": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "end_tipo_logradouro": {
+                                                    "type": "string"
+                                                },
+                                                "end_logradouro": {
+                                                    "type": "string"
+                                                },
+                                                "end_numero": {
+                                                    "type": "string"
+                                                },
+                                                "end_bairro": {
+                                                    "type": "string"
+                                                },
+                                                "cidade": {
+                                                    "properties": {
+                                                        "cid_id": {
+                                                            "type": "integer"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Servidor temporário atualizado com sucesso"
+                    },
+                    "400": {
+                        "description": "Erro de validação nos dados fornecidos"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    },
+                    "404": {
+                        "description": "Servidor temporário não encontrado"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "ServidoresTemporarios"
+                ],
+                "summary": "Excluir servidor temporário",
+                "description": "Remove o cadastro de um servidor temporário específico",
+                "operationId": "3f7aa94fffa2ef82bad43f7772a93340",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do servidor temporário (mesmo que pes_id)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "deleteRelated",
+                        "in": "query",
+                        "description": "Flag para excluir registros relacionados (pessoa, endereço, etc.)",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Servidor temporário excluído com sucesso"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    },
+                    "404": {
+                        "description": "Servidor temporário não encontrado"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/servidores-temporarios/{id}/foto": {
+            "post": {
+                "tags": [
+                    "ServidoresTemporarios"
+                ],
+                "summary": "Upload de foto do servidor temporário",
+                "description": "Realiza o upload da foto de um servidor temporário específico",
+                "operationId": "07d48872751b17a1fa6a9e9bce4797f3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do servidor temporário (mesmo que pes_id)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "foto": {
+                                        "description": "Arquivo de imagem para upload",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Foto atualizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "fp_id": {
+                                                    "type": "integer"
+                                                },
+                                                "fp_data": {
+                                                    "type": "string",
+                                                    "format": "date"
+                                                },
+                                                "fp_bucket": {
+                                                    "type": "string"
+                                                },
+                                                "fp_hash": {
+                                                    "type": "string"
+                                                },
+                                                "pes_id": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Foto cadastrada com sucesso"
+                    },
+                    "400": {
+                        "description": "Erro de validação nos dados fornecidos"
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    },
+                    "404": {
+                        "description": "Servidor temporário não encontrado"
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "ServidoresTemporarios"
+                ],
+                "summary": "Excluir foto do servidor temporário",
+                "description": "Remove a foto de um servidor temporário específico",
+                "operationId": "8c952154b833a65195ae74b9dbf676ef",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do servidor temporário (mesmo que pes_id)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Foto excluída com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Foto excluída com sucesso"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Servidor temporário não encontrado ou foto não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Servidor temporário não encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Token inválido ou expirado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/servidores-temporarios/buscar-por-nome": {
+            "get": {
+                "tags": [
+                    "ServidoresTemporarios"
+                ],
+                "summary": "Buscar endereço funcional por nome do servidor temporário",
+                "description": "Retorna o endereço funcional (da unidade onde é lotado) de servidores temporários a partir de uma parte do nome",
+                "operationId": "634439a5ed48be926964ee9325781467",
+                "parameters": [
+                    {
+                        "name": "nome",
+                        "in": "query",
+                        "description": "Parte do nome do servidor a ser pesquisado",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "minLength": 3
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de servidores temporários e seus endereços funcionais",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "nome": {
+                                                        "type": "string"
+                                                    },
+                                                    "data_admissao": {
+                                                        "type": "string",
+                                                        "format": "date"
+                                                    },
+                                                    "data_demissao": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "nullable": true
+                                                    },
+                                                    "unidade": {
+                                                        "type": "string"
+                                                    },
+                                                    "endereco_funcional": {
+                                                        "properties": {
+                                                            "logradouro": {
+                                                                "type": "string"
+                                                            },
+                                                            "numero": {
+                                                                "type": "string"
+                                                            },
+                                                            "bairro": {
+                                                                "type": "string"
+                                                            },
+                                                            "cidade": {
+                                                                "type": "string"
+                                                            },
+                                                            "uf": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro nos parâmetros da requisição"
+                    },
+                    "404": {
+                        "description": "Nenhum servidor temporário encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/unidades": {
+            "get": {
+                "tags": [
+                    "Unidades"
+                ],
+                "summary": "Listar todas as unidades",
+                "description": "Retorna uma lista paginada das unidades cadastradas com seus endereços",
+                "operationId": "730356d2b5fecbbae7d431671a22f0a1",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número da página (padrão: 1)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Quantidade de registros por página (padrão: 10, máximo: 100)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10,
+                            "maximum": 100,
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de unidades",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Unidade"
+                                            }
+                                        },
+                                        "pagination": {
+                                            "properties": {
+                                                "currentPage": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "totalPages": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "perPage": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 100
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Token inválido ou expirado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Unidades"
+                ],
+                "summary": "Cadastrar nova unidade",
+                "description": "Cria um novo registro de unidade com seus endereços",
+                "operationId": "92459d94c6de8b5e227d6e0ea7df5a33",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "unid_nome",
+                                    "unid_sigla"
+                                ],
+                                "properties": {
+                                    "unid_nome": {
+                                        "type": "string",
+                                        "example": "Secretaria de Saúde"
+                                    },
+                                    "unid_sigla": {
+                                        "type": "string",
+                                        "example": "SESAU"
+                                    },
+                                    "endereco": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "end_tipo_logradouro": {
+                                                    "type": "string",
+                                                    "example": "Avenida"
+                                                },
+                                                "end_logradouro": {
+                                                    "type": "string",
+                                                    "example": "Rio Branco"
+                                                },
+                                                "end_numero": {
+                                                    "type": "integer",
+                                                    "example": "123"
+                                                },
+                                                "end_bairro": {
+                                                    "type": "string",
+                                                    "example": "Centro"
+                                                },
+                                                "cidade": {
+                                                    "properties": {
+                                                        "cid_id": {
+                                                            "type": "integer",
+                                                            "example": "1"
+                                                        },
+                                                        "cid_nome": {
+                                                            "type": "string",
+                                                            "example": "Rio de Janeiro"
+                                                        },
+                                                        "cid_uf": {
+                                                            "type": "string",
+                                                            "example": "RJ"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Unidade cadastrada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unidade"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro de validação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Token inválido ou expirado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/unidades/{id}": {
+            "get": {
+                "tags": [
+                    "Unidades"
+                ],
+                "summary": "Buscar unidade por ID",
+                "description": "Retorna os dados de uma unidade específica com seus endereços",
+                "operationId": "f7355388c550621b672512360702fc66",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da unidade",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dados da unidade",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unidade"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Unidade não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Unidade não encontrada"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Token inválido ou expirado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Unidades"
+                ],
+                "summary": "Atualizar unidade",
+                "description": "Atualiza os dados de uma unidade específica e seus endereços",
+                "operationId": "b57f27244a851012dce2bb3a15e2d1b9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da unidade",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "unid_nome": {
+                                        "type": "string",
+                                        "example": "Secretaria de Saúde Atualizada"
+                                    },
+                                    "unid_sigla": {
+                                        "type": "string",
+                                        "example": "SESAU"
+                                    },
+                                    "endereco": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "end_id": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "end_tipo_logradouro": {
+                                                    "type": "string",
+                                                    "example": "Avenida"
+                                                },
+                                                "end_logradouro": {
+                                                    "type": "string",
+                                                    "example": "Rio Branco"
+                                                },
+                                                "end_numero": {
+                                                    "type": "integer",
+                                                    "example": "123"
+                                                },
+                                                "end_bairro": {
+                                                    "type": "string",
+                                                    "example": "Centro"
+                                                },
+                                                "cidade": {
+                                                    "properties": {
+                                                        "cid_id": {
+                                                            "type": "integer",
+                                                            "example": "1"
+                                                        },
+                                                        "cid_nome": {
+                                                            "type": "string",
+                                                            "example": "Rio de Janeiro"
+                                                        },
+                                                        "cid_uf": {
+                                                            "type": "string",
+                                                            "example": "RJ"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Unidade atualizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unidade"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro de validação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Unidade não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Unidade não encontrada"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Token inválido ou expirado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Unidades"
+                ],
+                "summary": "Excluir unidade",
+                "description": "Remove o cadastro de uma unidade específica",
+                "operationId": "e960485ddbdfba347b0cb97f82786952",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da unidade",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Unidade excluída com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unidade excluída com sucesso"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Unidade não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Unidade não encontrada"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Token inválido ou expirado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Autenticação": {
+                "title": "Auth Model",
+                "description": "Auth model data",
+                "properties": {
+                    "auth_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "auth_nome": {
+                        "type": "string",
+                        "example": "Maria Aparecida da Silva"
+                    },
+                    "auth_email": {
+                        "type": "string",
+                        "example": "teste@teste.com.br"
+                    },
+                    "auth_senha": {
+                        "type": "string",
+                        "example": "senha@123"
+                    }
+                },
+                "type": "object"
+            },
+            "Lotacao": {
+                "title": "Lotacao Model",
+                "description": "Lotacao model data",
+                "properties": {
+                    "lot_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "pes_id": {
+                        "type": "integer",
+                        "example": 23
+                    },
+                    "unid_id": {
+                        "type": "integer",
+                        "example": 5
+                    },
+                    "lot_data_lotacao": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-01-15"
+                    },
+                    "lot_data_remocao": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-03-01"
+                    },
+                    "lot_portaria": {
+                        "type": "string",
+                        "example": "Portaria Nº 123/2025"
+                    }
+                },
+                "type": "object"
+            },
+            "Cidade": {
+                "title": "Cidade Model",
+                "description": "Cidade model data",
+                "properties": {
+                    "cid_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "cid_nome": {
+                        "type": "string",
+                        "example": "Rio de Janeiro"
+                    },
+                    "cid_uf": {
+                        "type": "string",
+                        "example": "RJ"
+                    }
+                },
+                "type": "object"
+            },
+            "Endereco": {
+                "title": "Endereco Model",
+                "description": "Endereco model data",
+                "properties": {
+                    "end_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "end_tipo_logradouro": {
+                        "type": "string",
+                        "example": "Rua"
+                    },
+                    "end_logradouro": {
+                        "type": "string",
+                        "example": "Exemplo"
+                    },
+                    "end_numero": {
+                        "type": "integer",
+                        "example": 123
+                    },
+                    "end_bairro": {
+                        "type": "string",
+                        "example": "Centro"
+                    },
+                    "cidade": {
+                        "$ref": "#/components/schemas/Cidade"
+                    }
+                },
+                "type": "object"
+            },
+            "Unidade": {
+                "title": "Unidade Model",
+                "description": "Unidade model data",
+                "properties": {
+                    "unid_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "unid_nome": {
+                        "type": "string",
+                        "example": "Secretaria de Saúde"
+                    },
+                    "unid_sigla": {
+                        "type": "string",
+                        "example": "SESAU"
+                    },
+                    "endereco": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Endereco"
+                        }
+                    }
+                },
+                "type": "object"
+            }
         }
     },
     "tags": [
         {
-            "name": "Authentication",
-            "description": "Authentication"
+            "name": "Autenticação",
+            "description": "API Endpoints para autenticação de usuários"
         },
         {
-            "name": "User",
-            "description": "User"
+            "name": "Lotações",
+            "description": "API Endpoints para gerenciamento de lotações"
+        },
+        {
+            "name": "ServidoresEfetivos",
+            "description": "API Endpoints para gerenciamento de servidores efetivos"
+        },
+        {
+            "name": "ServidoresTemporarios",
+            "description": "API Endpoints para gerenciamento de servidores temporários"
+        },
+        {
+            "name": "Unidades",
+            "description": "API Endpoints para gerenciamento de unidades"
         }
     ]
 }
