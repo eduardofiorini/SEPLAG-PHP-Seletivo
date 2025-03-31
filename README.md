@@ -46,24 +46,12 @@ As prioridades do projeto estão listadas abaixo na ordem crescente:
 - ✅ Implementar CRUD - [31/03/2025 - Commit 13ce506](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/13ce506a7deca304eb13205454eb8f23e74ca1e5)
 - ✅ Implementar Paginação - [31/03/2025 - Commit 13ce506](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/13ce506a7deca304eb13205454eb8f23e74ca1e5)
 - ✅ Implementar Upload MinIO - [31/03/2025 - Commit 13ce506](https://github.com/eduardofiorini/SEPLAG-PHP-Seletivo/commit/13ce506a7deca304eb13205454eb8f23e74ca1e5)
-- ⬛ Implementar Teste Unitário
-- ⬛ Deploy
-- ⬛ Finalização
 
 ## 🛢️ Modelagem Banco de Dados
 
 Na modelagem abaixo não possui uma tabela de autenticação ou usuário, foi criado uma tabela "auth" para homologar o acesso e gerar o token JWT.
 
 ![Screenshot](diagrama.png)
-
-## 📖 Referências
-
-* <https://jwt.io/introduction>
-* <https://docs.min.io/>
-* <https://github.com/firebase/php-jwt>
-* <https://codeigniter.com/user_guide/index.html>
-* <https://packagist.org/packages/firebase/php-jwt>
-* <https://swagger.io/docs/>
 
 ## 📚 Documentação / Credencial
 ```sh
@@ -87,3 +75,12 @@ Senha: seplag@123
 Banco: seplag_db
 ```
 ![Screenshot](swagger.png)
+
+## 📖 Referências
+
+* <https://jwt.io/introduction>
+* <https://docs.min.io/>
+* <https://github.com/firebase/php-jwt>
+* <https://codeigniter.com/user_guide/index.html>
+* <https://packagist.org/packages/firebase/php-jwt>
+* <https://swagger.io/docs/>
