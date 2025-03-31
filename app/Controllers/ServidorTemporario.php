@@ -40,7 +40,7 @@ class ServidorTemporario extends ResourceController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/servidores-temporarios",
+     *     path="/servidores-temporarios",
      *     tags={"ServidoresTemporarios"},
      *     summary="Listar todos os servidores temporários",
      *     description="Retorna uma lista paginada dos servidores temporários no formato JSON simplificado",
@@ -118,7 +118,7 @@ class ServidorTemporario extends ResourceController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/servidores-temporarios/{id}",
+     *     path="/servidores-temporarios/{id}",
      *     tags={"ServidoresTemporarios"},
      *     summary="Buscar servidor temporário por ID",
      *     description="Retorna os dados de um servidor temporário específico no formato JSON simplificado",
@@ -164,7 +164,7 @@ class ServidorTemporario extends ResourceController
 
     /**
      * @OA\Post(
-     *     path="/api/v1/servidores-temporarios",
+     *     path="/servidores-temporarios",
      *     tags={"ServidoresTemporarios"},
      *     summary="Cadastrar novo servidor temporário",
      *     description="Cria um novo registro de servidor temporário",
@@ -321,7 +321,7 @@ class ServidorTemporario extends ResourceController
 
     /**
      * @OA\Put(
-     *     path="/api/v1/servidores-temporarios/{id}",
+     *     path="/servidores-temporarios/{id}",
      *     tags={"ServidoresTemporarios"},
      *     summary="Atualizar servidor temporário",
      *     description="Atualiza os dados de um servidor temporário específico",
@@ -494,7 +494,7 @@ class ServidorTemporario extends ResourceController
 
     /**
      * @OA\Delete(
-     *     path="/api/v1/servidores-temporarios/{id}",
+     *     path="/servidores-temporarios/{id}",
      *     tags={"ServidoresTemporarios"},
      *     summary="Excluir servidor temporário",
      *     description="Remove o cadastro de um servidor temporário específico",
@@ -584,7 +584,7 @@ class ServidorTemporario extends ResourceController
 
     /**
      * @OA\Post(
-     *     path="/api/v1/servidores-temporarios/{id}/foto",
+     *     path="/servidores-temporarios/{id}/foto",
      *     tags={"ServidoresTemporarios"},
      *     summary="Upload de foto do servidor temporário",
      *     description="Realiza o upload da foto de um servidor temporário específico",
@@ -774,7 +774,7 @@ class ServidorTemporario extends ResourceController
 
     /**
      * @OA\Delete(
-     *     path="/api/v1/servidores-temporarios/{id}/foto",
+     *     path="/servidores-temporarios/{id}/foto",
      *     tags={"ServidoresTemporarios"},
      *     summary="Excluir foto do servidor temporário",
      *     description="Remove a foto de um servidor temporário específico",
@@ -883,7 +883,7 @@ class ServidorTemporario extends ResourceController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/servidores-temporarios/buscar-por-nome",
+     *     path="/servidores-temporarios/buscar-por-nome",
      *     tags={"ServidoresTemporarios"},
      *     summary="Buscar endereço funcional por nome do servidor temporário",
      *     description="Retorna o endereço funcional (da unidade onde é lotado) de servidores temporários a partir de uma parte do nome",

@@ -41,7 +41,7 @@ class ServidorEfetivo extends ResourceController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/servidores-efetivos",
+     *     path="/servidores-efetivos",
      *     tags={"ServidoresEfetivos"},
      *     summary="Listar todos os servidores efetivos",
      *     description="Retorna uma lista paginada dos servidores efetivos no formato JSON simplificado",
@@ -119,7 +119,7 @@ class ServidorEfetivo extends ResourceController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/servidores-efetivos/{id}",
+     *     path="/servidores-efetivos/{id}",
      *     tags={"ServidoresEfetivos"},
      *     summary="Buscar servidor efetivo por ID",
      *     description="Retorna os dados de um servidor efetivo específico no formato JSON simplificado",
@@ -165,7 +165,7 @@ class ServidorEfetivo extends ResourceController
 
     /**
      * @OA\Post(
-     *     path="/api/v1/servidores-efetivos",
+     *     path="/servidores-efetivos",
      *     tags={"ServidoresEfetivos"},
      *     summary="Cadastrar novo servidor efetivo",
      *     description="Cria um novo registro de servidor efetivo",
@@ -320,7 +320,7 @@ class ServidorEfetivo extends ResourceController
 
     /**
      * @OA\Put(
-     *     path="/api/v1/servidores-efetivos/{id}",
+     *     path="/servidores-efetivos/{id}",
      *     tags={"ServidoresEfetivos"},
      *     summary="Atualizar servidor efetivo",
      *     description="Atualiza os dados de um servidor efetivo específico",
@@ -491,7 +491,7 @@ class ServidorEfetivo extends ResourceController
 
     /**
      * @OA\Delete(
-     *     path="/api/v1/servidores-efetivos/{id}",
+     *     path="/servidores-efetivos/{id}",
      *     tags={"ServidoresEfetivos"},
      *     summary="Excluir servidor efetivo",
      *     description="Remove o cadastro de um servidor efetivo específico",
@@ -581,7 +581,7 @@ class ServidorEfetivo extends ResourceController
 
     /**
      * @OA\Post(
-     *     path="/api/v1/servidores-efetivos/{id}/foto",
+     *     path="/servidores-efetivos/{id}/foto",
      *     tags={"ServidoresEfetivos"},
      *     summary="Upload de foto do servidor efetivo",
      *     description="Realiza o upload da foto de um servidor efetivo específico",
@@ -771,7 +771,7 @@ class ServidorEfetivo extends ResourceController
 
     /**
      * @OA\Delete(
-     *     path="/api/v1/servidores-efetivos/{id}/foto",
+     *     path="/servidores-efetivos/{id}/foto",
      *     tags={"ServidoresEfetivos"},
      *     summary="Excluir foto do servidor efetivo",
      *     description="Remove a foto de um servidor efetivo específico",
@@ -880,7 +880,7 @@ class ServidorEfetivo extends ResourceController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/servidores-efetivos/unidade/{unid_id}",
+     *     path="/servidores-efetivos/unidade/{unid_id}",
      *     tags={"ServidoresEfetivos"},
      *     summary="Listar servidores efetivos de uma unidade",
      *     description="Retorna uma lista dos servidores efetivos lotados em uma determinada unidade",
@@ -982,7 +982,7 @@ class ServidorEfetivo extends ResourceController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/servidores-efetivos/buscar-por-nome",
+     *     path="/servidores-efetivos/buscar-por-nome",
      *     tags={"ServidoresEfetivos"},
      *     summary="Buscar endereço funcional por nome do servidor",
      *     description="Retorna o endereço funcional (da unidade onde é lotado) de servidores efetivos a partir de uma parte do nome",

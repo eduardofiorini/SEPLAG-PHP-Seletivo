@@ -65,7 +65,7 @@ class Unidade extends ResourceController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/unidades",
+     *     path="/unidades",
      *     tags={"Unidades"},
      *     summary="Listar todas as unidades",
      *     description="Retorna uma lista paginada das unidades cadastradas com seus endereços",
@@ -141,7 +141,7 @@ class Unidade extends ResourceController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/unidades/{id}",
+     *     path="/unidades/{id}",
      *     tags={"Unidades"},
      *     summary="Buscar unidade por ID",
      *     description="Retorna os dados de uma unidade específica com seus endereços",
@@ -192,7 +192,7 @@ class Unidade extends ResourceController
 
     /**
      * @OA\Post(
-     *     path="/api/v1/unidades",
+     *     path="/unidades",
      *     tags={"Unidades"},
      *     summary="Cadastrar nova unidade",
      *     description="Cria um novo registro de unidade com seus endereços",
@@ -339,7 +339,7 @@ class Unidade extends ResourceController
 
     /**
      * @OA\Put(
-     *     path="/api/v1/unidades/{id}",
+     *     path="/unidades/{id}",
      *     tags={"Unidades"},
      *     summary="Atualizar unidade",
      *     description="Atualiza os dados de uma unidade específica e seus endereços",
@@ -566,7 +566,7 @@ class Unidade extends ResourceController
 
     /**
      * @OA\Delete(
-     *     path="/api/v1/unidades/{id}",
+     *     path="/unidades/{id}",
      *     tags={"Unidades"},
      *     summary="Excluir unidade",
      *     description="Remove o cadastro de uma unidade específica",

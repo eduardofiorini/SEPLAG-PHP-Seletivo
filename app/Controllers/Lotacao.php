@@ -37,7 +37,7 @@ class Lotacao extends ResourceController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/lotacoes",
+     *     path="/lotacoes",
      *     tags={"Lotações"},
      *     summary="Listar todas as lotações",
      *     description="Retorna uma lista paginada das lotações cadastradas",
@@ -108,7 +108,7 @@ class Lotacao extends ResourceController
 
     /**
      * @OA\Get(
-     *     path="/api/v1/lotacoes/{id}",
+     *     path="/lotacoes/{id}",
      *     tags={"Lotações"},
      *     summary="Buscar lotação por ID",
      *     description="Retorna os dados de uma lotação específica",
@@ -156,7 +156,7 @@ class Lotacao extends ResourceController
 
     /**
      * @OA\Post(
-     *     path="/api/v1/lotacoes",
+     *     path="/lotacoes",
      *     tags={"Lotações"},
      *     summary="Cadastrar nova lotação",
      *     description="Cria um novo registro de lotação",
@@ -229,7 +229,7 @@ class Lotacao extends ResourceController
 
     /**
      * @OA\Put(
-     *     path="/api/v1/lotacoes/{id}",
+     *     path="/lotacoes/{id}",
      *     tags={"Lotações"},
      *     summary="Atualizar lotação",
      *     description="Atualiza os dados de uma lotação específica",
@@ -322,7 +322,7 @@ class Lotacao extends ResourceController
 
     /**
      * @OA\Delete(
-     *     path="/api/v1/lotacoes/{id}",
+     *     path="/lotacoes/{id}",
      *     tags={"Lotações"},
      *     summary="Excluir lotação",
      *     description="Remove o cadastro de uma lotação específica",

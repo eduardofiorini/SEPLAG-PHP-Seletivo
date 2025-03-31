@@ -12,14 +12,14 @@
         }
     ],
     "paths": {
-        "/api/v1/auth": {
+        "/auth": {
             "post": {
                 "tags": [
                     "Autenticação"
                 ],
                 "summary": "Realiza a autenticação na api",
                 "description": "Favor inserir os dados de email e senha (password)",
-                "operationId": "ff999332b4fde4d1418d55fff84f397c",
+                "operationId": "099d4984a1d3987f3e26162a5852f172",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -113,14 +113,14 @@
                 }
             }
         },
-        "/api/v1/auth/registro": {
+        "/auth/registro": {
             "post": {
                 "tags": [
                     "Autenticação"
                 ],
                 "summary": "Cadastrar de novos usuários",
                 "description": "Criar novo usuário para acesso",
-                "operationId": "38e4611ea044dd6eac72db007fcccdcb",
+                "operationId": "86bd6275b3d6e23b0716396daf44ef3e",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -192,14 +192,14 @@
                 }
             }
         },
-        "/api/v1/auth/refresh": {
+        "/auth/refresh": {
             "post": {
                 "tags": [
                     "Autenticação"
                 ],
                 "summary": "Refresh token autenticação",
                 "description": "Gerar um novo token usando o token existente válido",
-                "operationId": "b1568a1acfb18650550948c848e4c217",
+                "operationId": "ac2b50b936395f970078167524d6ddfd",
                 "responses": {
                     "200": {
                         "description": "Token atualizado com sucesso",
@@ -243,14 +243,14 @@
                 ]
             }
         },
-        "/api/v1/auth/logout": {
+        "/auth/logout": {
             "post": {
                 "tags": [
                     "Autenticação"
                 ],
                 "summary": "Desconectar Usuário",
                 "description": "Sair do usuário autenticado",
-                "operationId": "97fafed12839d420c75cf57408010951",
+                "operationId": "ebda7de17bf1519688c2efe2ef40828f",
                 "responses": {
                     "200": {
                         "description": "Desconectado com sucesso",
@@ -276,14 +276,14 @@
                 ]
             }
         },
-        "/api/v1/lotacoes": {
+        "/lotacoes": {
             "get": {
                 "tags": [
                     "Lotações"
                 ],
                 "summary": "Listar todas as lotações",
                 "description": "Retorna uma lista paginada das lotações cadastradas",
-                "operationId": "b286c099696cf17bdfe6e238c407cefd",
+                "operationId": "888fcac388e90f0ee5a3b0c47dd94d1c",
                 "parameters": [
                     {
                         "name": "page",
@@ -378,7 +378,7 @@
                 ],
                 "summary": "Cadastrar nova lotação",
                 "description": "Cria um novo registro de lotação",
-                "operationId": "272647d30130932cd4cf1a504f30662b",
+                "operationId": "36b11479c2c9e5e8a409f6c85a2d42a7",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -468,14 +468,14 @@
                 ]
             }
         },
-        "/api/v1/lotacoes/{id}": {
+        "/lotacoes/{id}": {
             "get": {
                 "tags": [
                     "Lotações"
                 ],
                 "summary": "Buscar lotação por ID",
                 "description": "Retorna os dados de uma lotação específica",
-                "operationId": "7555102638ff113465926e64a82b6ce3",
+                "operationId": "f12975ef8af64c67d502c40ff96ae897",
                 "parameters": [
                     {
                         "name": "id",
@@ -543,7 +543,7 @@
                 ],
                 "summary": "Atualizar lotação",
                 "description": "Atualiza os dados de uma lotação específica",
-                "operationId": "0a402f9d18a1360d36ada7bfd410bc64",
+                "operationId": "50eb41ed95a484757e34b4acc6b007e1",
                 "parameters": [
                     {
                         "name": "id",
@@ -660,7 +660,7 @@
                 ],
                 "summary": "Excluir lotação",
                 "description": "Remove o cadastro de uma lotação específica",
-                "operationId": "6db6719d95e48e407b31101588cf7c82",
+                "operationId": "f708a7a5cc8b5fb046f072d5825fdaf3",
                 "parameters": [
                     {
                         "name": "id",
@@ -729,14 +729,14 @@
                 ]
             }
         },
-        "/api/v1/servidores-efetivos": {
+        "/servidores-efetivos": {
             "get": {
                 "tags": [
                     "ServidoresEfetivos"
                 ],
                 "summary": "Listar todos os servidores efetivos",
                 "description": "Retorna uma lista paginada dos servidores efetivos no formato JSON simplificado",
-                "operationId": "8fd459537dadbe9966e299d1644ea0b0",
+                "operationId": "52da7c40dde1e18e75e4d6f7402ef7c6",
                 "parameters": [
                     {
                         "name": "page",
@@ -811,7 +811,7 @@
                 ],
                 "summary": "Cadastrar novo servidor efetivo",
                 "description": "Cria um novo registro de servidor efetivo",
-                "operationId": "36a94a683fe773def0c99e5d95852b96",
+                "operationId": "b316ad5d4806c3fb761cb046bd924655",
                 "requestBody": {
                     "description": "Dados do servidor efetivo",
                     "required": true,
@@ -913,14 +913,14 @@
                 ]
             }
         },
-        "/api/v1/servidores-efetivos/{id}": {
+        "/servidores-efetivos/{id}": {
             "get": {
                 "tags": [
                     "ServidoresEfetivos"
                 ],
                 "summary": "Buscar servidor efetivo por ID",
                 "description": "Retorna os dados de um servidor efetivo específico no formato JSON simplificado",
-                "operationId": "128d1bb11276af1cfd5e7a08cc31710a",
+                "operationId": "29d73591250247fa1b2d1a7b86ab5467",
                 "parameters": [
                     {
                         "name": "id",
@@ -962,7 +962,7 @@
                 ],
                 "summary": "Atualizar servidor efetivo",
                 "description": "Atualiza os dados de um servidor efetivo específico",
-                "operationId": "8bd92886ebc9590c34089e9474533226",
+                "operationId": "48ebec307335212b3b35e8b5b1a95b03",
                 "parameters": [
                     {
                         "name": "id",
@@ -1071,7 +1071,7 @@
                 ],
                 "summary": "Excluir servidor efetivo",
                 "description": "Remove o cadastro de um servidor efetivo específico",
-                "operationId": "0eda61f1d767559f3cc0f6906d3cb956",
+                "operationId": "3fb9ee701ecc76fbf41add18596a9e9a",
                 "parameters": [
                     {
                         "name": "id",
@@ -1114,14 +1114,14 @@
                 ]
             }
         },
-        "/api/v1/servidores-efetivos/{id}/foto": {
+        "/servidores-efetivos/{id}/foto": {
             "post": {
                 "tags": [
                     "ServidoresEfetivos"
                 ],
                 "summary": "Upload de foto do servidor efetivo",
                 "description": "Realiza o upload da foto de um servidor efetivo específico",
-                "operationId": "f6590c04437103deeb209e6ca513a8b3",
+                "operationId": "dba25d23878992b23627f35a1faf95a8",
                 "parameters": [
                     {
                         "name": "id",
@@ -1215,7 +1215,7 @@
                 ],
                 "summary": "Excluir foto do servidor efetivo",
                 "description": "Remove a foto de um servidor efetivo específico",
-                "operationId": "4505b4453a376ff7cf9b19346538ba7d",
+                "operationId": "2ad3595c2d321711a62d9d7b1d3c528d",
                 "parameters": [
                     {
                         "name": "id",
@@ -1299,14 +1299,14 @@
                 ]
             }
         },
-        "/api/v1/servidores-efetivos/unidade/{unid_id}": {
+        "/servidores-efetivos/unidade/{unid_id}": {
             "get": {
                 "tags": [
                     "ServidoresEfetivos"
                 ],
                 "summary": "Listar servidores efetivos de uma unidade",
                 "description": "Retorna uma lista dos servidores efetivos lotados em uma determinada unidade",
-                "operationId": "202aff1a00e1713eb9f0b6185231024d",
+                "operationId": "254df3587763f0c7ec54bfb660599d0c",
                 "parameters": [
                     {
                         "name": "unid_id",
@@ -1366,14 +1366,14 @@
                 ]
             }
         },
-        "/api/v1/servidores-efetivos/buscar-por-nome": {
+        "/servidores-efetivos/buscar-por-nome": {
             "get": {
                 "tags": [
                     "ServidoresEfetivos"
                 ],
                 "summary": "Buscar endereço funcional por nome do servidor",
                 "description": "Retorna o endereço funcional (da unidade onde é lotado) de servidores efetivos a partir de uma parte do nome",
-                "operationId": "8046aff631d4f0e9a0058ee038579917",
+                "operationId": "31d7cc166a98e1124e1e1590d51c7e41",
                 "parameters": [
                     {
                         "name": "nome",
@@ -1453,14 +1453,14 @@
                 ]
             }
         },
-        "/api/v1/servidores-temporarios": {
+        "/servidores-temporarios": {
             "get": {
                 "tags": [
                     "ServidoresTemporarios"
                 ],
                 "summary": "Listar todos os servidores temporários",
                 "description": "Retorna uma lista paginada dos servidores temporários no formato JSON simplificado",
-                "operationId": "67559d745d519e5f700a1aa8f6d608bb",
+                "operationId": "f9093d5b0318d43d027ec2b84e0575e9",
                 "parameters": [
                     {
                         "name": "page",
@@ -1535,7 +1535,7 @@
                 ],
                 "summary": "Cadastrar novo servidor temporário",
                 "description": "Cria um novo registro de servidor temporário",
-                "operationId": "421e85a17090397152c19cc5c2f912e9",
+                "operationId": "a6fe9614545f7086d1bd340a16dc4225",
                 "requestBody": {
                     "description": "Dados do servidor temporário",
                     "required": true,
@@ -1642,14 +1642,14 @@
                 ]
             }
         },
-        "/api/v1/servidores-temporarios/{id}": {
+        "/servidores-temporarios/{id}": {
             "get": {
                 "tags": [
                     "ServidoresTemporarios"
                 ],
                 "summary": "Buscar servidor temporário por ID",
                 "description": "Retorna os dados de um servidor temporário específico no formato JSON simplificado",
-                "operationId": "de857478001e289cc56897fae22274de",
+                "operationId": "036b679b41a84ca51213fe03007ff241",
                 "parameters": [
                     {
                         "name": "id",
@@ -1691,7 +1691,7 @@
                 ],
                 "summary": "Atualizar servidor temporário",
                 "description": "Atualiza os dados de um servidor temporário específico",
-                "operationId": "a5e00f03a83dd72013262d14a05fb43f",
+                "operationId": "2c53722d0566a293ae153799dc4c2bcb",
                 "parameters": [
                     {
                         "name": "id",
@@ -1805,7 +1805,7 @@
                 ],
                 "summary": "Excluir servidor temporário",
                 "description": "Remove o cadastro de um servidor temporário específico",
-                "operationId": "3f7aa94fffa2ef82bad43f7772a93340",
+                "operationId": "aab00a5535428d91198a3f2cd6e393df",
                 "parameters": [
                     {
                         "name": "id",
@@ -1848,14 +1848,14 @@
                 ]
             }
         },
-        "/api/v1/servidores-temporarios/{id}/foto": {
+        "/servidores-temporarios/{id}/foto": {
             "post": {
                 "tags": [
                     "ServidoresTemporarios"
                 ],
                 "summary": "Upload de foto do servidor temporário",
                 "description": "Realiza o upload da foto de um servidor temporário específico",
-                "operationId": "07d48872751b17a1fa6a9e9bce4797f3",
+                "operationId": "71d8f9d0c3b408a441208dba965cfa89",
                 "parameters": [
                     {
                         "name": "id",
@@ -1949,7 +1949,7 @@
                 ],
                 "summary": "Excluir foto do servidor temporário",
                 "description": "Remove a foto de um servidor temporário específico",
-                "operationId": "8c952154b833a65195ae74b9dbf676ef",
+                "operationId": "196c18013e386b4f0583226948afe701",
                 "parameters": [
                     {
                         "name": "id",
@@ -2033,14 +2033,14 @@
                 ]
             }
         },
-        "/api/v1/servidores-temporarios/buscar-por-nome": {
+        "/servidores-temporarios/buscar-por-nome": {
             "get": {
                 "tags": [
                     "ServidoresTemporarios"
                 ],
                 "summary": "Buscar endereço funcional por nome do servidor temporário",
                 "description": "Retorna o endereço funcional (da unidade onde é lotado) de servidores temporários a partir de uma parte do nome",
-                "operationId": "634439a5ed48be926964ee9325781467",
+                "operationId": "fce802440ed5f78a546e247b590834c5",
                 "parameters": [
                     {
                         "name": "nome",
@@ -2126,14 +2126,14 @@
                 ]
             }
         },
-        "/api/v1/unidades": {
+        "/unidades": {
             "get": {
                 "tags": [
                     "Unidades"
                 ],
                 "summary": "Listar todas as unidades",
                 "description": "Retorna uma lista paginada das unidades cadastradas com seus endereços",
-                "operationId": "730356d2b5fecbbae7d431671a22f0a1",
+                "operationId": "354dc28aa484d613c44785201e3854e9",
                 "parameters": [
                     {
                         "name": "page",
@@ -2228,7 +2228,7 @@
                 ],
                 "summary": "Cadastrar nova unidade",
                 "description": "Cria um novo registro de unidade com seus endereços",
-                "operationId": "92459d94c6de8b5e227d6e0ea7df5a33",
+                "operationId": "f9f4e94616f81b80ff7d51df11bcb031",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2344,14 +2344,14 @@
                 ]
             }
         },
-        "/api/v1/unidades/{id}": {
+        "/unidades/{id}": {
             "get": {
                 "tags": [
                     "Unidades"
                 ],
                 "summary": "Buscar unidade por ID",
                 "description": "Retorna os dados de uma unidade específica com seus endereços",
-                "operationId": "f7355388c550621b672512360702fc66",
+                "operationId": "1b5b3c27f8ed459a803780fb0a7da96d",
                 "parameters": [
                     {
                         "name": "id",
@@ -2419,7 +2419,7 @@
                 ],
                 "summary": "Atualizar unidade",
                 "description": "Atualiza os dados de uma unidade específica e seus endereços",
-                "operationId": "b57f27244a851012dce2bb3a15e2d1b9",
+                "operationId": "2236e792bc32a4ef44ebcf78efc89e28",
                 "parameters": [
                     {
                         "name": "id",
@@ -2567,7 +2567,7 @@
                 ],
                 "summary": "Excluir unidade",
                 "description": "Remove o cadastro de uma unidade específica",
-                "operationId": "e960485ddbdfba347b0cb97f82786952",
+                "operationId": "2cfa54f3d595247d57792f8b7149da35",
                 "parameters": [
                     {
                         "name": "id",

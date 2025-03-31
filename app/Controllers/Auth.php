@@ -55,7 +55,7 @@ class Auth extends ResourceController
 
     /**
      * @OA\Post(
-     *     path="/api/v1/auth",
+     *     path="/auth",
      *     tags={"Autenticação"},
      *     summary="Realiza a autenticação na api",
      *     description="Favor inserir os dados de email e senha (password)",
@@ -153,7 +153,7 @@ class Auth extends ResourceController
 
     /**
      * @OA\Post(
-     *     path="/api/v1/auth/registro",
+     *     path="/auth/registro",
      *     tags={"Autenticação"},
      *     summary="Cadastrar de novos usuários",
      *     description="Criar novo usuário para acesso",
@@ -212,7 +212,7 @@ class Auth extends ResourceController
 
     /**
      * @OA\Post(
-     *     path="/api/v1/auth/refresh",
+     *     path="/auth/refresh",
      *     tags={"Autenticação"},
      *     summary="Refresh token autenticação",
      *     description="Gerar um novo token usando o token existente válido",
@@ -279,7 +279,7 @@ class Auth extends ResourceController
 
     /**
      * @OA\Post(
-     *     path="/api/v1/auth/logout",
+     *     path="/auth/logout",
      *     tags={"Autenticação"},
      *     summary="Desconectar Usuário",
      *     description="Sair do usuário autenticado",
