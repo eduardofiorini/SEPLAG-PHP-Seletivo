@@ -20,8 +20,8 @@ use CodeIgniter\RESTful\ResourceController;
  *     title="Cidade Model",
  *     description="Cidade model data",
  *     @OA\Property(property="cid_id", type="integer", example=1),
- *     @OA\Property(property="cid_nome", type="string", example="Rio de Janeiro"),
- *     @OA\Property(property="cid_uf", type="string", example="RJ")
+ *     @OA\Property(property="cid_nome", type="string", example="Cuiabá"),
+ *     @OA\Property(property="cid_uf", type="string", example="MT")
  * )
  *
  * @OA\Schema(
@@ -50,10 +50,10 @@ class Unidade extends ResourceController
 {
     use ResponseTrait;
 
-    protected $unidadeModel;
-    protected $unidadeEnderecoModel;
-    protected $enderecoModel;
-    protected $cidadeModel;
+    protected UnidadeModel $unidadeModel;
+    protected UnidadeEnderecoModel $unidadeEnderecoModel;
+    protected EnderecoModel $enderecoModel;
+    protected CidadeModel $cidadeModel;
 
     public function __construct()
     {
@@ -211,8 +211,8 @@ class Unidade extends ResourceController
      *                     @OA\Property(property="end_bairro", type="string", example="Centro"),
      *                     @OA\Property(property="cidade", type="object",
      *                         @OA\Property(property="cid_id", type="integer", example="1"),
-     *                         @OA\Property(property="cid_nome", type="string", example="Rio de Janeiro"),
-     *                         @OA\Property(property="cid_uf", type="string", example="RJ")
+     *                         @OA\Property(property="cid_nome", type="string", example="Cuiabá"),
+     *                         @OA\Property(property="cid_uf", type="string", example="MT")
      *                     )
      *                 )
      *             )
@@ -257,6 +257,7 @@ class Unidade extends ResourceController
             'unid_sigla' => $this->request->getVar('unid_sigla')
         ];
 
+
         $db = \Config\Database::connect();
         $db->transBegin();
 
@@ -270,32 +271,33 @@ class Unidade extends ResourceController
 
             // Processar endereços se existirem
             $enderecos = $this->request->getVar('endereco');
+
             if (is_array($enderecos) && count($enderecos) > 0) {
                 foreach ($enderecos as $enderecoData) {
-                    $cidadeData = $enderecoData['cidade'] ?? null;
+                    $cidadeData = $enderecoData->cidade ?? null;
 
                     // Verificar se a cidade já existe ou precisa ser criada
                     $cidadeId = null;
-                    if (!empty($cidadeData['cid_id'])) {
-                        $cidade = $this->cidadeModel->find($cidadeData['cid_id']);
+                    if (!empty($cidadeData->cid_id)) {
+                        $cidade = $this->cidadeModel->find($cidadeData->cid_id);
                         if ($cidade) {
-                            $cidadeId = $cidadeData['cid_id'];
+                            $cidadeId = $cidadeData->cid_id;
                         }
                     }
 
-                    if (!$cidadeId && !empty($cidadeData['cid_nome']) && !empty($cidadeData['cid_uf'])) {
+                    if (!$cidadeId && !empty($cidadeData->cid_nome) && !empty($cidadeData->cid_uf)) {
                         // Buscar cidade por nome e UF
-                        $cidade = $this->cidadeModel->where('cid_nome', $cidadeData['cid_nome'])
-                            ->where('cid_uf', $cidadeData['cid_uf'])
+                        $cidade = $this->cidadeModel->where('cid_nome', $cidadeData->cid_nome)
+                            ->where('cid_uf', $cidadeData->cid_uf)
                             ->first();
 
                         if ($cidade) {
                             $cidadeId = $cidade['cid_id'];
                         } else {
-                            // Criar nova cidade
+                            // Criar uma nova cidade
                             $novaCidade = [
-                                'cid_nome' => $cidadeData['cid_nome'],
-                                'cid_uf' => $cidadeData['cid_uf']
+                                'cid_nome' => $cidadeData->cid_nome,
+                                'cid_uf' => $cidadeData->cid_uf
                             ];
                             $cidadeId = $this->cidadeModel->insert($novaCidade);
                         }
@@ -304,10 +306,10 @@ class Unidade extends ResourceController
                     if ($cidadeId) {
                         // Criar novo endereço
                         $novoEndereco = [
-                            'end_tipo_logradouro' => $enderecoData['end_tipo_logradouro'] ?? '',
-                            'end_logradouro' => $enderecoData['end_logradouro'] ?? '',
-                            'end_numero' => $enderecoData['end_numero'] ?? null,
-                            'end_bairro' => $enderecoData['end_bairro'] ?? '',
+                            'end_tipo_logradouro' => $enderecoData->end_tipo_logradouro ?? '',
+                            'end_logradouro' => $enderecoData->end_logradouro ?? '',
+                            'end_numero' => $enderecoData->end_numero ?? null,
+                            'end_bairro' => $enderecoData->end_bairro ?? '',
                             'cid_id' => $cidadeId
                         ];
 
@@ -365,8 +367,8 @@ class Unidade extends ResourceController
      *                     @OA\Property(property="end_bairro", type="string", example="Centro"),
      *                     @OA\Property(property="cidade", type="object",
      *                         @OA\Property(property="cid_id", type="integer", example="1"),
-     *                         @OA\Property(property="cid_nome", type="string", example="Rio de Janeiro"),
-     *                         @OA\Property(property="cid_uf", type="string", example="RJ")
+     *                         @OA\Property(property="cid_nome", type="string", example="Cuiabá"),
+     *                         @OA\Property(property="cid_uf", type="string", example="MT")
      *                     )
      *                 )
      *             )
@@ -440,19 +442,19 @@ class Unidade extends ResourceController
             $enderecos = $this->request->getVar('endereco');
             if (is_array($enderecos)) {
                 foreach ($enderecos as $enderecoData) {
-                    $enderecoId = $enderecoData['end_id'] ?? null;
-                    $cidadeData = $enderecoData['cidade'] ?? null;
+                    $enderecoId = $enderecoData->end_id ?? null;
+                    $cidadeData = $enderecoData->cidade ?? null;
 
                     // Processar cidade
                     $cidadeId = null;
-                    if (!empty($cidadeData['cid_id'])) {
-                        $cidade = $this->cidadeModel->find($cidadeData['cid_id']);
+                    if (!empty($cidadeData->cid_id)) {
+                        $cidade = $this->cidadeModel->find($cidadeData->cid_id);
                         if ($cidade) {
-                            $cidadeId = $cidadeData['cid_id'];
+                            $cidadeId = $cidadeData->cid_id;
 
                             // Atualizar dados da cidade se necessário
-                            if ((!empty($cidadeData['cid_nome']) && $cidadeData['cid_nome'] != $cidade['cid_nome']) ||
-                                (!empty($cidadeData['cid_uf']) && $cidadeData['cid_uf'] != $cidade['cid_uf'])) {
+                            if ((!empty($cidadeData->id_nome) && $cidadeData->cid_nome != $cidade['cid_nome']) ||
+                                (!empty($cidadeData->cid_uf) && $cidadeData->cid_uf != $cidade['cid_uf'])) {
 
                                 $cidadeUpdateData = [];
                                 if (!empty($cidadeData['cid_nome'])) {
@@ -495,17 +497,17 @@ class Unidade extends ResourceController
                         if ($endereco) {
                             $enderecoUpdateData = [];
 
-                            if (!empty($enderecoData['end_tipo_logradouro'])) {
-                                $enderecoUpdateData['end_tipo_logradouro'] = $enderecoData['end_tipo_logradouro'];
+                            if (!empty($enderecoData->end_tipo_logradouro)) {
+                                $enderecoUpdateData['end_tipo_logradouro'] = $enderecoData->end_tipo_logradouro;
                             }
-                            if (!empty($enderecoData['end_logradouro'])) {
-                                $enderecoUpdateData['end_logradouro'] = $enderecoData['end_logradouro'];
+                            if (!empty($enderecoData->end_logradouro)) {
+                                $enderecoUpdateData['end_logradouro'] = $enderecoData->end_logradouro;
                             }
-                            if (isset($enderecoData['end_numero'])) {
-                                $enderecoUpdateData['end_numero'] = $enderecoData['end_numero'];
+                            if (isset($enderecoData->end_numero)) {
+                                $enderecoUpdateData['end_numero'] = $enderecoData->end_numero;
                             }
-                            if (!empty($enderecoData['end_bairro'])) {
-                                $enderecoUpdateData['end_bairro'] = $enderecoData['end_bairro'];
+                            if (!empty($enderecoData->end_bairro)) {
+                                $enderecoUpdateData['end_bairro'] = $enderecoData->end_bairro;
                             }
                             if ($cidadeId) {
                                 $enderecoUpdateData['cid_id'] = $cidadeId;
@@ -637,6 +639,9 @@ class Unidade extends ResourceController
 
     /**
      * Método auxiliar para obter os endereços de uma unidade
+     *
+     * @param int $unidadeId ID da Unidade (unid_id)
+     * @return array|null Array com os dados formatados ou null se não encontrado
      */
     private function getEnderecosUnidade($unidadeId)
     {

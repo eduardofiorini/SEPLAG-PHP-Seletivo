@@ -2275,11 +2275,11 @@
                                                         },
                                                         "cid_nome": {
                                                             "type": "string",
-                                                            "example": "Rio de Janeiro"
+                                                            "example": "Cuiabá"
                                                         },
                                                         "cid_uf": {
                                                             "type": "string",
-                                                            "example": "RJ"
+                                                            "example": "MT"
                                                         }
                                                     },
                                                     "type": "object"
@@ -2477,11 +2477,11 @@
                                                         },
                                                         "cid_nome": {
                                                             "type": "string",
-                                                            "example": "Rio de Janeiro"
+                                                            "example": "Cuiabá"
                                                         },
                                                         "cid_uf": {
                                                             "type": "string",
-                                                            "example": "RJ"
+                                                            "example": "MT"
                                                         }
                                                     },
                                                     "type": "object"
@@ -2705,11 +2705,11 @@
                     },
                     "cid_nome": {
                         "type": "string",
-                        "example": "Rio de Janeiro"
+                        "example": "Cuiabá"
                     },
                     "cid_uf": {
                         "type": "string",
-                        "example": "RJ"
+                        "example": "MT"
                     }
                 },
                 "type": "object"
