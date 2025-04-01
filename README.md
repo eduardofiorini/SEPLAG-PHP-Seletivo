@@ -53,6 +53,19 @@ Na modelagem abaixo não possui uma tabela de autenticação ou usuário, foi cr
 
 ![Screenshot](diagrama.png)
 
+## 🚀 Deploy (On Line)
+```sh
+# API Rest
+http://143.198.154.129:8080 #Swagger Docs
+http://143.198.154.129:8080/api/v1/docs #Swagger Docs
+http://143.198.154.129:8080/api/v1/docs/generate #Swagger Docs Generate
+http://143.198.154.129:8080/api/v1/* #Rotas de base inicial
+
+# MinIO
+http://143.198.154.129:9000
+http://143.198.154.129:9001
+```
+
 ## 📚 Documentação / Credencial
 ```sh
 # Api Rest (Swagger)
