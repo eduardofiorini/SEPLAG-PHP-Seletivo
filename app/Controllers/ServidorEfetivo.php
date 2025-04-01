@@ -352,6 +352,7 @@ class ServidorEfetivo extends ResourceController
      *     @OA\RequestBody(
      *         description="Dados para atualização do servidor efetivo",
      *         @OA\JsonContent(
+     *             @OA\Property(property="pes_id", type="integer", example="1"),
      *             @OA\Property(property="pes_nome", type="string"),
      *             @OA\Property(property="pes_data_nascimento", type="string", format="date"),
      *             @OA\Property(property="pes_sexo", type="string", enum={"M", "F"}),
@@ -570,7 +571,6 @@ class ServidorEfetivo extends ResourceController
                     }
                 }
             }
-
 
             $db->transCommit();
 

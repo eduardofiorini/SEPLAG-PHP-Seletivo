@@ -993,6 +993,10 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
+                                    "pes_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
                                     "pes_nome": {
                                         "type": "string"
                                     },
@@ -1619,21 +1623,34 @@
                                         "items": {
                                             "properties": {
                                                 "end_tipo_logradouro": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "example": "Avenida"
                                                 },
                                                 "end_logradouro": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "example": "Rio Branco"
                                                 },
                                                 "end_numero": {
-                                                    "type": "string"
+                                                    "type": "integer",
+                                                    "example": "123"
                                                 },
                                                 "end_bairro": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "example": "Centro"
                                                 },
                                                 "cidade": {
                                                     "properties": {
                                                         "cid_id": {
-                                                            "type": "integer"
+                                                            "type": "integer",
+                                                            "example": "1"
+                                                        },
+                                                        "cid_nome": {
+                                                            "type": "string",
+                                                            "example": "Cuiabá"
+                                                        },
+                                                        "cid_uf": {
+                                                            "type": "string",
+                                                            "example": "MT"
                                                         }
                                                     },
                                                     "type": "object"
@@ -1739,6 +1756,10 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
+                                    "pes_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
                                     "pes_nome": {
                                         "type": "string"
                                     },
@@ -1777,21 +1798,34 @@
                                         "items": {
                                             "properties": {
                                                 "end_tipo_logradouro": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "example": "Avenida"
                                                 },
                                                 "end_logradouro": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "example": "Rio Branco"
                                                 },
                                                 "end_numero": {
-                                                    "type": "string"
+                                                    "type": "integer",
+                                                    "example": "123"
                                                 },
                                                 "end_bairro": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "example": "Centro"
                                                 },
                                                 "cidade": {
                                                     "properties": {
                                                         "cid_id": {
-                                                            "type": "integer"
+                                                            "type": "integer",
+                                                            "example": "1"
+                                                        },
+                                                        "cid_nome": {
+                                                            "type": "string",
+                                                            "example": "Cuiabá"
+                                                        },
+                                                        "cid_uf": {
+                                                            "type": "string",
+                                                            "example": "MT"
                                                         }
                                                     },
                                                     "type": "object"
@@ -2063,14 +2097,81 @@
                 ]
             }
         },
-        "/servidores-temporarios/buscar-por-nome": {
+        "/servidores-temporarios/lotacao/unidade/{unid_id}": {
+            "get": {
+                "tags": [
+                    "ServidoresEfetivos"
+                ],
+                "summary": "Listar servidores efetivos de uma unidade",
+                "description": "Retorna uma lista dos servidores efetivos lotados em uma determinada unidade",
+                "operationId": "ba9855871e2a9699a0efea21d1557f7b",
+                "parameters": [
+                    {
+                        "name": "unid_id",
+                        "in": "path",
+                        "description": "ID da unidade",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de servidores efetivos da unidade",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "nome": {
+                                                        "type": "string"
+                                                    },
+                                                    "idade": {
+                                                        "type": "integer"
+                                                    },
+                                                    "unidade": {
+                                                        "type": "string"
+                                                    },
+                                                    "foto": {
+                                                        "type": "string",
+                                                        "nullable": true
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Unidade não encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/servidores-temporarios/lotacao/buscar-por-nome": {
             "get": {
                 "tags": [
                     "ServidoresTemporarios"
                 ],
                 "summary": "Buscar endereço funcional por nome do servidor temporário",
                 "description": "Retorna o endereço funcional (da unidade onde é lotado) de servidores temporários a partir de uma parte do nome",
-                "operationId": "fce802440ed5f78a546e247b590834c5",
+                "operationId": "874efaf78dba65c5f2f8e63fe274405b",
                 "parameters": [
                     {
                         "name": "nome",
