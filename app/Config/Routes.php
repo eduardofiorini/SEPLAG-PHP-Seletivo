@@ -35,6 +35,9 @@ $routes->group('api/v1/lotacoes', ['filter' => 'jwt'], function ($routes) {
     $routes->delete('(:num)', 'Lotacao::delete/$1');
 });
 
+$routes->get('api/v1/servidores-efetivos/lotacao/buscar-por-nome', 'ServidorEfetivo::buscarPorNome');
+$routes->get('api/v1/servidores-efetivos/lotacao/unidade/(:num)', 'ServidorEfetivo::servidoresPorUnidade/$1');
+
 $routes->group('api/v1/servidores-efetivos', ['filter' => 'jwt'], function ($routes) {
     $routes->get('/', 'ServidorEfetivo::index');
     $routes->get('(:num)', 'ServidorEfetivo::show/$1');
@@ -43,9 +46,10 @@ $routes->group('api/v1/servidores-efetivos', ['filter' => 'jwt'], function ($rou
     $routes->delete('(:num)', 'ServidorEfetivo::delete/$1');
     $routes->post('(:num)/foto', 'ServidorEfetivo::uploadFoto');
     $routes->delete('(:num)/foto', 'ServidorEfetivo::deleteFoto');
-    $routes->get('/buscar-por-nome', 'ServidorEfetivo::buscarPorNome');
-    $routes->get('/unidade/(:num)', 'ServidorEfetivo::servidoresPorUnidade/$1');
 });
+
+$routes->get('api/v1/servidores-temporarios/lotacao/buscar-por-nome', 'ServidorTemporario::buscarPorNome');
+$routes->get('api/v1/servidores-temporarios/lotacao/unidade/(:num)', 'ServidorTemporario::servidoresPorUnidade/$1');
 
 $routes->group('api/v1/servidores-temporarios', ['filter' => 'jwt'], function ($routes) {
     $routes->get('/', 'ServidorTemporario::index');
@@ -55,6 +59,5 @@ $routes->group('api/v1/servidores-temporarios', ['filter' => 'jwt'], function ($
     $routes->delete('(:num)', 'ServidorTemporario::delete/$1');
     $routes->post('(:num)/foto', 'ServidorTemporario::uploadFoto');
     $routes->delete('(:num)/foto', 'ServidorTemporario::deleteFoto');
-    $routes->get('/buscar-por-nome', 'ServidorEfetivo::buscarPorNome');
 });
 

@@ -457,11 +457,11 @@ class Unidade extends ResourceController
                                 (!empty($cidadeData->cid_uf) && $cidadeData->cid_uf != $cidade['cid_uf'])) {
 
                                 $cidadeUpdateData = [];
-                                if (!empty($cidadeData['cid_nome'])) {
-                                    $cidadeUpdateData['cid_nome'] = $cidadeData['cid_nome'];
+                                if (!empty($cidadeData->cid_nome)) {
+                                    $cidadeUpdateData['cid_nome'] = $cidadeData->cid_nome;
                                 }
-                                if (!empty($cidadeData['cid_uf'])) {
-                                    $cidadeUpdateData['cid_uf'] = $cidadeData['cid_uf'];
+                                if (!empty($cidadeData->cid_uf)) {
+                                    $cidadeUpdateData['cid_uf'] = $cidadeData->cid_uf;
                                 }
 
                                 if (!empty($cidadeUpdateData)) {
@@ -471,10 +471,10 @@ class Unidade extends ResourceController
                         }
                     }
 
-                    if (!$cidadeId && !empty($cidadeData['cid_nome']) && !empty($cidadeData['cid_uf'])) {
+                    if (!$cidadeId && !empty($cidadeData->cid_nome) && !empty($cidadeData->cid_uf)) {
                         // Buscar cidade por nome e UF
-                        $cidade = $this->cidadeModel->where('cid_nome', $cidadeData['cid_nome'])
-                            ->where('cid_uf', $cidadeData['cid_uf'])
+                        $cidade = $this->cidadeModel->where('cid_nome', $cidadeData->cid_nome)
+                            ->where('cid_uf', $cidadeData->cid_uf)
                             ->first();
 
                         if ($cidade) {
@@ -482,8 +482,8 @@ class Unidade extends ResourceController
                         } else {
                             // Criar nova cidade
                             $novaCidade = [
-                                'cid_nome' => $cidadeData['cid_nome'],
-                                'cid_uf' => $cidadeData['cid_uf']
+                                'cid_nome' => $cidadeData->cid_nome,
+                                'cid_uf' => $cidadeData->cid_uf
                             ];
                             $cidadeId = $this->cidadeModel->insert($novaCidade);
                         }

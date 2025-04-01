@@ -9,7 +9,6 @@ use App\Models\PessoaEnderecoModel;
 use App\Models\EnderecoModel;
 use App\Models\CidadeModel;
 use CodeIgniter\API\ResponseTrait;
-use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\RESTful\ResourceController;
 
 /**
@@ -190,14 +189,14 @@ class ServidorEfetivo extends ResourceController
      *                 type="array",
      *                 @OA\Items(
      *                     type="object",
-     *                     @OA\Property(property="end_tipo_logradouro", type="string"),
-     *                     @OA\Property(property="end_logradouro", type="string"),
-     *                     @OA\Property(property="end_numero", type="string"),
-     *                     @OA\Property(property="end_bairro", type="string"),
-     *                     @OA\Property(
-     *                         property="cidade",
-     *                         type="object",
-     *                         @OA\Property(property="cid_id", type="integer")
+     *                     @OA\Property(property="end_tipo_logradouro", type="string", example="Avenida"),
+     *                     @OA\Property(property="end_logradouro", type="string", example="Rio Branco"),
+     *                     @OA\Property(property="end_numero", type="integer", example="123"),
+     *                     @OA\Property(property="end_bairro", type="string", example="Centro"),
+     *                     @OA\Property(property="cidade", type="object",
+     *                         @OA\Property(property="cid_id", type="integer", example="1"),
+     *                         @OA\Property(property="cid_nome", type="string", example="Cuiabá"),
+     *                         @OA\Property(property="cid_uf", type="string", example="MT")
      *                     )
      *                 )
      *             )
@@ -233,12 +232,7 @@ class ServidorEfetivo extends ResourceController
             'pes_sexo' => 'required|in_list[M,F]',
             'pes_mae' => 'required|min_length[3]|max_length[200]',
             'pes_pai' => 'permit_empty|min_length[3]|max_length[200]',
-            'servidor_efetivo.se_matricula' => 'required|min_length[1]|max_length[50]',
-            'endereco.0.end_tipo_logradouro' => 'required|max_length[50]',
-            'endereco.0.end_logradouro' => 'required|max_length[200]',
-            'endereco.0.end_numero' => 'required',
-            'endereco.0.end_bairro' => 'required|max_length[100]',
-            'endereco.0.cidade.cid_id' => 'required|integer|is_natural_no_zero'
+            'servidor_efetivo.se_matricula' => 'required|min_length[1]|max_length[50]'
         ];
 
         if (!$this->validate($rules)) {
@@ -259,52 +253,75 @@ class ServidorEfetivo extends ResourceController
         // Extrai os dados do servidor efetivo
         $servidorData = $requestData['servidor_efetivo'] ?? null;
 
-        // Extrai os dados do endereço
-        $enderecoData = null;
-        if (isset($requestData['endereco']) && is_array($requestData['endereco']) && !empty($requestData['endereco'])) {
-            $enderecoData = [
-                'end_tipo_logradouro' => $requestData['endereco'][0]['end_tipo_logradouro'],
-                'end_logradouro' => $requestData['endereco'][0]['end_logradouro'],
-                'end_numero' => $requestData['endereco'][0]['end_numero'],
-                'end_bairro' => $requestData['endereco'][0]['end_bairro'],
-                'cid_id' => $requestData['endereco'][0]['cidade']['cid_id']
-            ];
-        }
-
-        // Verificar se a cidade existe
-        if ($enderecoData && isset($enderecoData['cid_id'])) {
-            $cidade = $this->cidadeModel->find($enderecoData['cid_id']);
-            if (!$cidade) {
-                return $this->failNotFound('Cidade não encontrada');
-            }
-        }
-
         $db = \Config\Database::connect();
         $db->transBegin();
 
         try {
-            // 1. Inserir pessoa
+            // Inserir pessoa
             $pesId = $this->pessoaModel->insert($pessoaData);
             if (!$pesId) {
                 throw new \Exception('Erro ao cadastrar pessoa');
             }
 
-            // 2. Inserir servidor efetivo
+            // Inserir servidor efetivo
             $servidorData['pes_id'] = $pesId;
             $this->servidorEfetivoModel->insert($servidorData);
 
-            // 3. Inserir endereço se existir
-            if ($enderecoData) {
-                $endId = $this->enderecoModel->insert($enderecoData);
-                if (!$endId) {
-                    throw new \Exception('Erro ao cadastrar endereço');
-                }
+            // Inserir endereço e cidade
+            $enderecos = $this->request->getVar('endereco');
 
-                // 4. Relacionar pessoa com endereço
-                $this->pessoaEnderecoModel->insert([
-                    'pes_id' => $pesId,
-                    'end_id' => $endId
-                ]);
+            if (is_array($enderecos) && count($enderecos) > 0) {
+                foreach ($enderecos as $enderecoData) {
+                    $cidadeData = $enderecoData->cidade ?? null;
+
+                    // Verificar se a cidade já existe ou precisa ser criada
+                    $cidadeId = null;
+                    if (!empty($cidadeData->cid_id)) {
+                        $cidade = $this->cidadeModel->find($cidadeData->cid_id);
+                        if ($cidade) {
+                            $cidadeId = $cidadeData->cid_id;
+                        }
+                    }
+
+                    if (!$cidadeId && !empty($cidadeData->cid_nome) && !empty($cidadeData->cid_uf)) {
+                        // Buscar cidade por nome e UF
+                        $cidade = $this->cidadeModel->where('cid_nome', $cidadeData->cid_nome)
+                            ->where('cid_uf', $cidadeData->cid_uf)
+                            ->first();
+
+                        if ($cidade) {
+                            $cidadeId = $cidade['cid_id'];
+                        } else {
+                            // Criar uma nova cidade
+                            $novaCidade = [
+                                'cid_nome' => $cidadeData->cid_nome,
+                                'cid_uf' => $cidadeData->cid_uf
+                            ];
+                            $cidadeId = $this->cidadeModel->insert($novaCidade);
+                        }
+                    }
+
+                    if ($cidadeId) {
+                        // Criar novo endereço
+                        $novoEndereco = [
+                            'end_tipo_logradouro' => $enderecoData->end_tipo_logradouro ?? '',
+                            'end_logradouro' => $enderecoData->end_logradouro ?? '',
+                            'end_numero' => $enderecoData->end_numero ?? null,
+                            'end_bairro' => $enderecoData->end_bairro ?? '',
+                            'cid_id' => $cidadeId
+                        ];
+
+                        $enderecoId = $this->enderecoModel->insert($novoEndereco);
+
+                        if ($enderecoId) {
+                            // Criar relação entre pessoa e endereço
+                            $this->pessoaEnderecoModel->insert([
+                                'pes_id' => $pesId,
+                                'end_id' => $enderecoId
+                            ]);
+                        }
+                    }
+                }
             }
 
             $db->transCommit();
@@ -350,14 +367,15 @@ class ServidorEfetivo extends ResourceController
      *                 type="array",
      *                 @OA\Items(
      *                     type="object",
-     *                     @OA\Property(property="end_tipo_logradouro", type="string"),
-     *                     @OA\Property(property="end_logradouro", type="string"),
-     *                     @OA\Property(property="end_numero", type="string"),
-     *                     @OA\Property(property="end_bairro", type="string"),
-     *                     @OA\Property(
-     *                         property="cidade",
-     *                         type="object",
-     *                         @OA\Property(property="cid_id", type="integer")
+     *                     @OA\Property(property="end_id", type="integer", example="1"),
+     *                     @OA\Property(property="end_tipo_logradouro", type="string", example="Avenida"),
+     *                     @OA\Property(property="end_logradouro", type="string", example="Rio Branco"),
+     *                     @OA\Property(property="end_numero", type="integer", example="123"),
+     *                     @OA\Property(property="end_bairro", type="string", example="Centro"),
+     *                     @OA\Property(property="cidade", type="object",
+     *                         @OA\Property(property="cid_id", type="integer", example="1"),
+     *                         @OA\Property(property="cid_nome", type="string", example="Cuiabá"),
+     *                         @OA\Property(property="cid_uf", type="string", example="MT")
      *                     )
      *                 )
      *             )
@@ -387,12 +405,13 @@ class ServidorEfetivo extends ResourceController
      */
     public function update($id = null)
     {
-        $servidor = $this->servidorEfetivoModel->find($id);
+        $servidor = $this->servidorEfetivoModel->where('pes_id',$id)->first();
         if (!$servidor) {
             return $this->failNotFound('Servidor efetivo não encontrado');
         }
 
-        $pessoa = $this->pessoaModel->find($id);
+        $pessoa = $this->pessoaModel->where('pes_id',$id)->first();
+
         if (!$pessoa) {
             return $this->failNotFound('Pessoa não encontrada');
         }
@@ -404,11 +423,6 @@ class ServidorEfetivo extends ResourceController
             'pes_mae' => 'permit_empty|min_length[3]|max_length[200]',
             'pes_pai' => 'permit_empty|min_length[3]|max_length[200]',
             'servidor_efetivo.se_matricula' => 'permit_empty|min_length[1]|max_length[50]',
-            'endereco.0.end_tipo_logradouro' => 'permit_empty|max_length[50]',
-            'endereco.0.end_logradouro' => 'permit_empty|max_length[200]',
-            'endereco.0.end_numero' => 'permit_empty',
-            'endereco.0.end_bairro' => 'permit_empty|max_length[100]',
-            'endereco.0.cidade.cid_id' => 'permit_empty|integer|is_natural_no_zero'
         ];
 
         if (!$this->validate($rules)) {
@@ -428,55 +442,135 @@ class ServidorEfetivo extends ResourceController
         // Extrai os dados do servidor efetivo
         $servidorData = $requestData['servidor_efetivo'] ?? null;
 
-        // Extrai os dados do endereço
-        $enderecoData = null;
-        if (isset($requestData['endereco']) && is_array($requestData['endereco']) && !empty($requestData['endereco'])) {
-            $enderecoData = [];
-            if (isset($requestData['endereco'][0]['end_tipo_logradouro'])) $enderecoData['end_tipo_logradouro'] = $requestData['endereco'][0]['end_tipo_logradouro'];
-            if (isset($requestData['endereco'][0]['end_logradouro'])) $enderecoData['end_logradouro'] = $requestData['endereco'][0]['end_logradouro'];
-            if (isset($requestData['endereco'][0]['end_numero'])) $enderecoData['end_numero'] = $requestData['endereco'][0]['end_numero'];
-            if (isset($requestData['endereco'][0]['end_bairro'])) $enderecoData['end_bairro'] = $requestData['endereco'][0]['end_bairro'];
-            if (isset($requestData['endereco'][0]['cidade']['cid_id'])) $enderecoData['cid_id'] = $requestData['endereco'][0]['cidade']['cid_id'];
-        }
-
-        // Verificar se a cidade existe (se fornecida)
-        if ($enderecoData && isset($enderecoData['cid_id'])) {
-            $cidade = $this->cidadeModel->find($enderecoData['cid_id']);
-            if (!$cidade) {
-                return $this->failNotFound('Cidade não encontrada');
-            }
-        }
-
         $db = \Config\Database::connect();
         $db->transBegin();
 
         try {
-            // 1. Atualizar dados da pessoa
+            // Atualizar dados da pessoa
             if (!empty($pessoaData)) {
                 $this->pessoaModel->update($id, $pessoaData);
             }
 
-            // 2. Atualizar dados do servidor efetivo
+            // Atualizar dados do servidor efetivo
             if ($servidorData) {
                 $this->servidorEfetivoModel->update($id, $servidorData);
             }
 
-            // 3. Atualizar ou criar endereço
-            if ($enderecoData && !empty($enderecoData)) {
-                $pessoaEndereco = $this->pessoaEnderecoModel->where('pes_id', $id)->first();
+            // Atualizar endereços
+            $enderecos = $this->request->getVar('endereco');
+            if (is_array($enderecos)) {
+                foreach ($enderecos as $enderecoData) {
+                    $enderecoId = $enderecoData->end_id ?? null;
+                    $cidadeData = $enderecoData->cidade ?? null;
 
-                if ($pessoaEndereco) {
-                    // Atualizar endereço existente
-                    $this->enderecoModel->update($pessoaEndereco['end_id'], $enderecoData);
-                } else {
-                    // Criar novo endereço e relacionamento
-                    $endId = $this->enderecoModel->insert($enderecoData);
-                    $this->pessoaEnderecoModel->insert([
-                        'pes_id' => $id,
-                        'end_id' => $endId
-                    ]);
+                    // Processar cidade
+                    $cidadeId = null;
+                    if (!empty($cidadeData->cid_id)) {
+                        $cidade = $this->cidadeModel->find($cidadeData->cid_id);
+                        if ($cidade) {
+                            $cidadeId = $cidadeData->cid_id;
+
+                            // Atualizar dados da cidade se necessário
+                            if ((!empty($cidadeData->id_nome) && $cidadeData->cid_nome != $cidade['cid_nome']) ||
+                                (!empty($cidadeData->cid_uf) && $cidadeData->cid_uf != $cidade['cid_uf'])) {
+
+                                $cidadeUpdateData = [];
+                                if (!empty($cidadeData->cid_nome)) {
+                                    $cidadeUpdateData['cid_nome'] = $cidadeData->cid_nome;
+                                }
+                                if (!empty($cidadeData->cid_uf)) {
+                                    $cidadeUpdateData['cid_uf'] = $cidadeData->cid_uf;
+                                }
+
+                                if (!empty($cidadeUpdateData)) {
+                                    $this->cidadeModel->update($cidadeId, $cidadeUpdateData);
+                                }
+                            }
+                        }
+                    }
+
+                    if (!$cidadeId && !empty($cidadeData->cid_nome) && !empty($cidadeData->cid_uf)) {
+                        // Buscar cidade por nome e UF
+                        $cidade = $this->cidadeModel->where('cid_nome', $cidadeData->cid_nome)
+                            ->where('cid_uf', $cidadeData->cid_uf)
+                            ->first();
+
+                        if ($cidade) {
+                            $cidadeId = $cidade['cid_id'];
+                        } else {
+                            // Criar nova cidade
+                            $novaCidade = [
+                                'cid_nome' => $cidadeData->cid_nome,
+                                'cid_uf' => $cidadeData->cid_uf
+                            ];
+                            $cidadeId = $this->cidadeModel->insert($novaCidade);
+                        }
+                    }
+
+                    // Processar endereço
+                    if ($enderecoId) {
+                        // Atualizar endereço existente
+                        $endereco = $this->enderecoModel->find($enderecoId);
+
+                        if ($endereco) {
+                            $enderecoUpdateData = [];
+
+                            if (!empty($enderecoData->end_tipo_logradouro)) {
+                                $enderecoUpdateData['end_tipo_logradouro'] = $enderecoData->end_tipo_logradouro;
+                            }
+                            if (!empty($enderecoData->end_logradouro)) {
+                                $enderecoUpdateData['end_logradouro'] = $enderecoData->end_logradouro;
+                            }
+                            if (isset($enderecoData->end_numero)) {
+                                $enderecoUpdateData['end_numero'] = $enderecoData->end_numero;
+                            }
+                            if (!empty($enderecoData->end_bairro)) {
+                                $enderecoUpdateData['end_bairro'] = $enderecoData->end_bairro;
+                            }
+                            if ($cidadeId) {
+                                $enderecoUpdateData['cid_id'] = $cidadeId;
+                            }
+
+                            if (!empty($enderecoUpdateData)) {
+                                $this->enderecoModel->update($enderecoId, $enderecoUpdateData);
+                            }
+
+                            // Verificar se o endereço já está associado à pessoa
+                            $relacao = $this->pessoaEnderecoModel->where('pes_id', $id)
+                                ->where('end_id', $enderecoId)
+                                ->first();
+
+                            if (!$relacao) {
+                                // Criar relação se não existir
+                                $this->pessoaEnderecoModel->insert([
+                                    'pes_id' => $id,
+                                    'end_id' => $enderecoId
+                                ]);
+                            }
+                        }
+                    } else if ($cidadeId) {
+                        // Criar novo endereço
+                        $novoEndereco = [
+                            'end_tipo_logradouro' => $enderecoData['end_tipo_logradouro'] ?? '',
+                            'end_logradouro' => $enderecoData['end_logradouro'] ?? '',
+                            'end_numero' => $enderecoData['end_numero'] ?? null,
+                            'end_bairro' => $enderecoData['end_bairro'] ?? '',
+                            'cid_id' => $cidadeId
+                        ];
+
+                        $novoEnderecoId = $this->enderecoModel->insert($novoEndereco);
+
+                        if ($novoEnderecoId) {
+                            // Criar relação entre pessoa e endereço
+                            $this->pessoaEnderecoModel->insert([
+                                'pes_id' => $id,
+                                'end_id' => $novoEnderecoId
+                            ]);
+                        }
+                    }
                 }
             }
+
 
             $db->transCommit();
 
@@ -880,7 +974,7 @@ class ServidorEfetivo extends ResourceController
 
     /**
      * @OA\Get(
-     *     path="/servidores-efetivos/unidade/{unid_id}",
+     *     path="/servidores-efetivos/lotacao/unidade/{unid_id}",
      *     tags={"ServidoresEfetivos"},
      *     summary="Listar servidores efetivos de uma unidade",
      *     description="Retorna uma lista dos servidores efetivos lotados em uma determinada unidade",
@@ -942,9 +1036,8 @@ class ServidorEfetivo extends ResourceController
             ->join('pessoa p', 'l.pes_id = p.pes_id')
             ->join('servidor_efetivo se', 'p.pes_id = se.pes_id')
             ->join('unidade u', 'l.unid_id = u.unid_id')
-            ->leftJoin('foto_pessoa fp', 'p.pes_id = fp.pes_id')
+            ->join('foto_pessoa fp', 'p.pes_id = fp.pes_id','left')
             ->where('l.unid_id', $unid_id)
-            ->where('l.lot_data_remocao IS NULL') // Somente lotações ativas
             ->orderBy('p.pes_nome', 'ASC');
 
         $resultado = $query->get()->getResultArray();
@@ -982,7 +1075,7 @@ class ServidorEfetivo extends ResourceController
 
     /**
      * @OA\Get(
-     *     path="/servidores-efetivos/buscar-por-nome",
+     *     path="/servidores-efetivos/lotacao/buscar-por-nome",
      *     tags={"ServidoresEfetivos"},
      *     summary="Buscar endereço funcional por nome do servidor",
      *     description="Retorna o endereço funcional (da unidade onde é lotado) de servidores efetivos a partir de uma parte do nome",
@@ -1055,9 +1148,8 @@ class ServidorEfetivo extends ResourceController
             ->join('servidor_efetivo se', 'p.pes_id = se.pes_id')
             ->join('lotacao l', 'p.pes_id = l.pes_id')
             ->join('unidade u', 'l.unid_id = u.unid_id')
-            ->leftJoin('unidade_endereco ue', 'u.unid_id = ue.unid_id')
+            ->join('unidade_endereco ue', 'u.unid_id = ue.unid_id','left')
             ->where('p.pes_nome LIKE', "%$nome%")
-            ->where('l.lot_data_remocao IS NULL') // Somente lotações ativas
             ->orderBy('p.pes_nome', 'ASC');
 
         $resultado = $query->get()->getResultArray();
@@ -1127,7 +1219,7 @@ class ServidorEfetivo extends ResourceController
         }
 
         // Buscar dados do servidor efetivo
-        $servidor = $this->servidorEfetivoModel->find($pesId);
+        $servidor = $this->servidorEfetivoModel->where('pes_id', $pesId)->first();
         if (!$servidor) {
             return null;
         }
@@ -1149,7 +1241,7 @@ class ServidorEfetivo extends ResourceController
 
         // Montar resposta formatada
         $result = [
-            'id' => (int)$pesId,
+            'pes_id' => (int)$pesId,
             'pes_nome' => $pessoa['pes_nome'],
             'pes_data_nascimento' => $pessoa['pes_data_nascimento'],
             'pes_sexo' => $pessoa['pes_sexo'],
@@ -1163,6 +1255,7 @@ class ServidorEfetivo extends ResourceController
         // Adicionar endereço se existir
         if ($endereco) {
             $enderecoFormatado = [
+                'end_id' => $endereco['end_id'],
                 'end_tipo_logradouro' => $endereco['end_tipo_logradouro'],
                 'end_logradouro' => $endereco['end_logradouro'],
                 'end_numero' => $endereco['end_numero'],

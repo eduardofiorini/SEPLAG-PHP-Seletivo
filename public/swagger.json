@@ -860,21 +860,34 @@
                                         "items": {
                                             "properties": {
                                                 "end_tipo_logradouro": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "example": "Avenida"
                                                 },
                                                 "end_logradouro": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "example": "Rio Branco"
                                                 },
                                                 "end_numero": {
-                                                    "type": "string"
+                                                    "type": "integer",
+                                                    "example": "123"
                                                 },
                                                 "end_bairro": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "example": "Centro"
                                                 },
                                                 "cidade": {
                                                     "properties": {
                                                         "cid_id": {
-                                                            "type": "integer"
+                                                            "type": "integer",
+                                                            "example": "1"
+                                                        },
+                                                        "cid_nome": {
+                                                            "type": "string",
+                                                            "example": "Cuiabá"
+                                                        },
+                                                        "cid_uf": {
+                                                            "type": "string",
+                                                            "example": "MT"
                                                         }
                                                     },
                                                     "type": "object"
@@ -1012,22 +1025,39 @@
                                         "type": "array",
                                         "items": {
                                             "properties": {
+                                                "end_id": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
                                                 "end_tipo_logradouro": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "example": "Avenida"
                                                 },
                                                 "end_logradouro": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "example": "Rio Branco"
                                                 },
                                                 "end_numero": {
-                                                    "type": "string"
+                                                    "type": "integer",
+                                                    "example": "123"
                                                 },
                                                 "end_bairro": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "example": "Centro"
                                                 },
                                                 "cidade": {
                                                     "properties": {
                                                         "cid_id": {
-                                                            "type": "integer"
+                                                            "type": "integer",
+                                                            "example": "1"
+                                                        },
+                                                        "cid_nome": {
+                                                            "type": "string",
+                                                            "example": "Cuiabá"
+                                                        },
+                                                        "cid_uf": {
+                                                            "type": "string",
+                                                            "example": "MT"
                                                         }
                                                     },
                                                     "type": "object"
@@ -1299,14 +1329,14 @@
                 ]
             }
         },
-        "/servidores-efetivos/unidade/{unid_id}": {
+        "/servidores-efetivos/lotacao/unidade/{unid_id}": {
             "get": {
                 "tags": [
                     "ServidoresEfetivos"
                 ],
                 "summary": "Listar servidores efetivos de uma unidade",
                 "description": "Retorna uma lista dos servidores efetivos lotados em uma determinada unidade",
-                "operationId": "254df3587763f0c7ec54bfb660599d0c",
+                "operationId": "a1fcc71a8d87f155d42bc1f990e851e1",
                 "parameters": [
                     {
                         "name": "unid_id",
@@ -1366,14 +1396,14 @@
                 ]
             }
         },
-        "/servidores-efetivos/buscar-por-nome": {
+        "/servidores-efetivos/lotacao/buscar-por-nome": {
             "get": {
                 "tags": [
                     "ServidoresEfetivos"
                 ],
                 "summary": "Buscar endereço funcional por nome do servidor",
                 "description": "Retorna o endereço funcional (da unidade onde é lotado) de servidores efetivos a partir de uma parte do nome",
-                "operationId": "31d7cc166a98e1124e1e1590d51c7e41",
+                "operationId": "b37cd615a137294b1f0a3c4fc2bfd66a",
                 "parameters": [
                     {
                         "name": "nome",
