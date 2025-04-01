@@ -80,7 +80,10 @@ Banco: seplag_db
 
 * <https://jwt.io/introduction>
 * <https://docs.min.io/>
-* <https://github.com/firebase/php-jwt>
 * <https://codeigniter.com/user_guide/index.html>
-* <https://packagist.org/packages/firebase/php-jwt>
 * <https://swagger.io/docs/>
+* <https://packagist.org/packages/codeigniter4/framework>
+* <https://packagist.org/packages/firebase/php-jwt>
+* <https://packagist.org/packages/aws/aws-sdk-php>
+* <https://packagist.org/packages/doctrine/annotations>
+* <https://packagist.org/packages/zircote/swagger-php>
