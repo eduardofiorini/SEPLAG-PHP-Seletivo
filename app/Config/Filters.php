@@ -14,6 +14,7 @@ use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
 use App\Filters\JWTAuthFilter;
 use App\Filters\RateLimitFilter;
+use App\Filters\CorsFilter;
 
 class Filters extends BaseFilters
 {
@@ -37,7 +38,8 @@ class Filters extends BaseFilters
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
         'jwt'           => JWTAuthFilter::class,
-        'limit'         => RateLimitFilter::class
+        'limit'         => RateLimitFilter::class,
+        'corsIP'         => CorsFilter::class
     ];
 
     /**
@@ -73,7 +75,8 @@ class Filters extends BaseFilters
      */
     public array $globals = [
         'before' => [
-            'jwt' => ['except' => ['api/v1/auth/', 'api/v1/auth/registro','api/v1/docs/generate','api/v1/docs','']]
+            'jwt' => ['except' => ['api/v1/auth/', 'api/v1/auth/registro','api/v1/docs/generate','api/v1/docs','']],
+            'corsIP'
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
@@ -99,7 +102,9 @@ class Filters extends BaseFilters
      */
     public array $methods = [
         'get' => ['limit'],
-        'post' => ['limit']
+        'post' => ['limit'],
+        'put' => ['limit'],
+        'delete' => ['limit']
     ];
 
     /**
