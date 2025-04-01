@@ -2100,10 +2100,10 @@
         "/servidores-temporarios/lotacao/unidade/{unid_id}": {
             "get": {
                 "tags": [
-                    "ServidoresEfetivos"
+                    "ServidoresTemporarios"
                 ],
-                "summary": "Listar servidores efetivos de uma unidade",
-                "description": "Retorna uma lista dos servidores efetivos lotados em uma determinada unidade",
+                "summary": "Listar servidores temporários de uma unidade",
+                "description": "Retorna uma lista dos servidores temporários lotados em uma determinada unidade",
                 "operationId": "ba9855871e2a9699a0efea21d1557f7b",
                 "parameters": [
                     {
@@ -2118,7 +2118,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Lista de servidores efetivos da unidade",
+                        "description": "Lista de servidores temporários da unidade",
                         "content": {
                             "application/json": {
                                 "schema": {

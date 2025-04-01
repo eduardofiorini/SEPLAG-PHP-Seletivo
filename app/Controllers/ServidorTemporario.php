@@ -977,9 +977,9 @@ class ServidorTemporario extends ResourceController
     /**
      * @OA\Get(
      *     path="/servidores-temporarios/lotacao/unidade/{unid_id}",
-     *     tags={"ServidoresEfetivos"},
-     *     summary="Listar servidores efetivos de uma unidade",
-     *     description="Retorna uma lista dos servidores efetivos lotados em uma determinada unidade",
+     *     tags={"ServidoresTemporarios"},
+     *     summary="Listar servidores temporários de uma unidade",
+     *     description="Retorna uma lista dos servidores temporários lotados em uma determinada unidade",
      *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
      *         name="unid_id",
@@ -990,7 +990,7 @@ class ServidorTemporario extends ResourceController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Lista de servidores efetivos da unidade",
+     *         description="Lista de servidores temporários da unidade",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(
