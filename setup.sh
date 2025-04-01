@@ -46,9 +46,12 @@ jwt.ipSeverAuth = ::1
 # MIN.IO
 #--------------------------------------------------------------------
 
-minio.endpoint = http://minio:9000
+minio.endpoint = http://$SERVER_IP:9000
 minio.access.key = admin
 minio.secret.key = seplag@123
+minio.region = us-east-1
+minio.default.bucket = uploads
+minio.use.path.style = true
 EOL
 
 echo "Iniciando o processo de setup dos containers..."

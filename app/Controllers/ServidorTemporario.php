@@ -784,7 +784,7 @@ class ServidorTemporario extends ResourceController
                 'version' => 'latest',
                 'region'  => $minioConfig->region,
                 'endpoint' => $minioConfig->endpoint,
-                'use_path_style_endpoint' => true,
+                'use_path_style_endpoint' => $minioConfig->usePathStyleEndpoint,
                 'credentials' => [
                     'key'    => $minioConfig->accessKey,
                     'secret' => $minioConfig->secretKey,
@@ -798,7 +798,6 @@ class ServidorTemporario extends ResourceController
 
             // Upload do arquivo para o MinIO
             $fileContent = file_get_contents($file->getTempName());
-            $hash = md5($fileContent);
 
             $result = $minioClient->putObject([
                 'Bucket' => $bucket,
@@ -811,7 +810,7 @@ class ServidorTemporario extends ResourceController
             $fotoData = [
                 'fp_data' => date('Y-m-d'),
                 'fp_bucket' => $bucket,
-                'fp_hash' => $hash,
+                'fp_hash' => $newName,
                 'pes_id' => $id
             ];
 
@@ -850,7 +849,8 @@ class ServidorTemporario extends ResourceController
                     'fp_id' => $fpId,
                     'fp_data' => $fotoData['fp_data'],
                     'fp_bucket' => $fotoData['fp_bucket'],
-                    'fp_hash' => $fotoData['fp_hash']
+                    'fp_hash' => $fotoData['fp_hash'],
+                    'pes_id' => $id
                 ]
             ];
 
@@ -1032,6 +1032,7 @@ class ServidorTemporario extends ResourceController
             p.pes_nome as nome,
             p.pes_data_nascimento as data_nascimento,
             u.unid_nome as unidade,
+            fp.fp_id as foto_id,
             fp.fp_bucket as foto_bucket,
             fp.fp_hash as foto_hash
         ')
@@ -1147,12 +1148,16 @@ class ServidorTemporario extends ResourceController
             st.st_data_demissao as data_demissao,
             u.unid_nome as unidade,
             u.unid_id as unidade_id,
-            ue.end_id as endereco_id
+            ue.end_id as endereco_id,
+            fp.fp_id as foto_id,
+            fp.fp_bucket as foto_bucket,
+            fp.fp_hash as foto_hash
         ')
             ->join('servidor_temporario st', 'p.pes_id = st.pes_id')
             ->join('lotacao l', 'p.pes_id = l.pes_id')
             ->join('unidade u', 'l.unid_id = u.unid_id')
-            ->left('unidade_endereco ue', 'u.unid_id = ue.unid_id','left')
+            ->join('unidade_endereco ue', 'u.unid_id = ue.unid_id','left')
+            ->join('foto_pessoa fp', 'p.pes_id = fp.pes_id','left')
             ->where('p.pes_nome LIKE', "%$nome%")
             ->orderBy('p.pes_nome', 'ASC');
 
@@ -1193,6 +1198,15 @@ class ServidorTemporario extends ResourceController
                 }
             }
 
+            // Gerar URL da foto se existir
+            $fotoUrl = null;
+            if (isset($row['foto_id'])) {
+                $temporaryLinkData = $this->getFotoLinkTemporario($row['foto_id']);
+                if ($temporaryLinkData) {
+                    $fotoUrl = $temporaryLinkData['url'];
+                }
+            }
+
             // Adicionar à lista de resultados
             $servidores[] = [
                 'id' => (int)$row['id'],
@@ -1200,7 +1214,8 @@ class ServidorTemporario extends ResourceController
                 'data_admissao' => $row['data_admissao'],
                 'data_demissao' => $row['data_demissao'],
                 'unidade' => $row['unidade'],
-                'endereco_funcional' => $enderecoFuncional ?: null
+                'endereco_funcional' => $enderecoFuncional ?: null,
+                'foto' => $fotoUrl
             ];
         }
 
@@ -1326,7 +1341,7 @@ class ServidorTemporario extends ResourceController
                 'version' => 'latest',
                 'region'  => $minioConfig->region,
                 'endpoint' => $minioConfig->endpoint,
-                'use_path_style_endpoint' => true,
+                'use_path_style_endpoint' => $minioConfig->usePathStyleEndpoint,
                 'credentials' => [
                     'key'    => $minioConfig->accessKey,
                     'secret' => $minioConfig->secretKey,
