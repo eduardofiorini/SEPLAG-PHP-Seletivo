@@ -41,6 +41,7 @@ database.default.port = 5432
 jwt.privateKey = SEPLAG-8cd98f00B204e9800998ECf8427e
 jwt.lifeTime = 300
 jwt.ipSeverAuth = 'http://$SERVER_IP:8080'
+jwt.blockCors = false
 
 #--------------------------------------------------------------------
 # MIN.IO

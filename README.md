@@ -25,7 +25,16 @@ docker-compose --version
 # Para facilitar o deploy foi criado um setup de instalação e configuração do projeto.
 chmod +x setup.sh && ./setup.sh
 ```
-
+## ⚙ Configurações (Opcionais)
+```sh
+# Caso queira rodar CORS apenas localmente ou para um IP específico.
+# Pare sua aplicação com comando abaixo.
+docker-compose down
+# Faça a edição do arquivo ".env" na variavel "jwt.blockCors" para "true".
+# Caso queira definir para outro ip altere a variavel "jwt.ipSeverAuth".
+# E apos salvar, inicie a aplicação com comando abaixo.
+docker-compose up -d
+```
 ## 📌 Implementações (Tasks)
 
 As prioridades do projeto estão listadas abaixo na ordem crescente: 

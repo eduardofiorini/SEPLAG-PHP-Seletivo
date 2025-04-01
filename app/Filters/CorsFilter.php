@@ -10,15 +10,17 @@ class CorsFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        $ip = getenv('jwt.privateKey');
-        $allowedOrigins = ['http://localhost:8080', 'http://127.0.0.1:8080', $ip];
+        if(getenv('jwt.blockCors')){
+            $ip = getenv('jwt.privateKey');
+            $allowedOrigins = ['http://localhost:8080', 'http://127.0.0.1:8080', $ip];
 
-        $origin = $request->getHeader('Origin') ? $request->getHeader('Origin')->getValue() : null;
+            $origin = $request->getHeader('Origin') ? $request->getHeader('Origin')->getValue() : null;
 
-        if ($origin && !in_array($origin, $allowedOrigins)) {
-            return service('response')
-                ->setStatusCode(403)
-                ->setJSON(['error' => 'CORS bloqueado, origem não permitida.']);
+            if ($origin && !in_array($origin, $allowedOrigins)) {
+                return service('response')
+                    ->setStatusCode(403)
+                    ->setJSON(['error' => 'CORS bloqueado, origem não permitida.']);
+            }
         }
     }
 
