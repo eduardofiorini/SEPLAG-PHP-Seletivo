@@ -10,7 +10,7 @@ class CorsFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        if(getenv('jwt.blockCors')){
+        if(getenv('jwt.blockCors') == 'true'){
             $ip = getenv('jwt.privateKey');
             $allowedOrigins = ['http://localhost:8080', 'http://127.0.0.1:8080', $ip];
 
